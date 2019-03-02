@@ -12,7 +12,7 @@ public class User {
     private static User active_user;
 
 
-    private User(String username, String token, String display_picture_url, String email)
+    private User(String username, String token, String email, String display_picture_url)
     {
         this.auth_token = token;
         this.username = username;
@@ -47,6 +47,4 @@ public class User {
     {
         return this.email;
     }
-
-
 }
