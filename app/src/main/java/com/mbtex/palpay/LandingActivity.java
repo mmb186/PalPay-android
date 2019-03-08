@@ -1,12 +1,14 @@
 package com.mbtex.palpay;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -23,7 +25,7 @@ public class LandingActivity extends AppCompatActivity {
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
      */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
+    private static final int AUTO_HIDE_DELAY_MILLIS = 5000;
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -50,14 +52,17 @@ public class LandingActivity extends AppCompatActivity {
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggle();
+                show();
             }
         });
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+//        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+
+//        startActivity(new Intent(LandingActivity.this, LoginActivity.class));
     }
 
     @Override
@@ -84,14 +89,6 @@ public class LandingActivity extends AppCompatActivity {
             return false;
         }
     };
-
-    private void toggle() {
-        if (mVisible) {
-            hide();
-        } else {
-            show();
-        }
-    }
 
     private void hide() {
         // Hide UI first
@@ -164,5 +161,20 @@ public class LandingActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    public void handleLoginButtonClick(View view)
+    {
+        Button loginButton = (Button)findViewById(R.id.loginButton);
+        startActivity(new Intent(this, LoginActivity.class));
+
+        System.out.println("LOGIN CLICKED");
+    }
+
+    public void handleSignUpButtonClick(View view)
+    {
+        Button loginButton = (Button)findViewById(R.id.loginButton);
+        // TODO: Create SignUp Activity
+        System.out.println("SIGN UP CLICKED");
     }
 }
