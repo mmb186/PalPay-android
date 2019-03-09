@@ -174,7 +174,7 @@ public class LandingActivity extends AppCompatActivity {
     public void handleSignUpButtonClick(View view)
     {
         Button loginButton = (Button)findViewById(R.id.loginButton);
-        // TODO: Create SignUp Activity
+        startActivity(new Intent(this, SignUp.class));
         System.out.println("SIGN UP CLICKED");
     }
 }
