@@ -6,7 +6,7 @@ import android.os.AsyncTask;
  */
 public class ApiManager extends AsyncTask<String, Integer, String> {
 
-    final static String BASEURL = "https://friend-pay.heroku.com/";
+    final static String _baseURL = "https://friendpay-stage.herokuapp.com/api";
 
 
     public ApiManager() { }
