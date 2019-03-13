@@ -1,15 +1,15 @@
 package com.mbtex.palpay;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.mbtex.palpay.ApiManager.ApiManager;
 import com.mbtex.palpay.ApiManager.AuthorizationApiManager;
 
 import org.json.JSONException;
@@ -26,10 +26,15 @@ public class SignUp extends AppCompatActivity {
     EditText confirm_password;
 
 
+    public Context getCtx() {
+        return this.getApplicationContext();
+    }
+
     public void registerButtonListeners()
     {
-        Log.i("info", "Regsiter sign up Click Listeners");
+        Log.i("info", "Register sign up Click Listeners");
         final Button signup_button = (Button) findViewById(R.id.sign_up_button);
+        this.getApplicationContext();
         signup_button.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -37,10 +42,8 @@ public class SignUp extends AppCompatActivity {
                 JSONObject loginData = new JSONObject();
                 addLoginFormValues(loginData);
 
-                ApiManager auth_manager = new AuthorizationApiManager();
-                ((AuthorizationApiManager) auth_manager).registerUser(loginData);
-                // TODO: Create Default Dashboard Page with DUMMY Values.
-                startActivity(new Intent(SignUp.this, LandingActivity.class));
+                AuthorizationApiManager authManager = AuthorizationApiManager.getAuthorizationManager(getCtx());
+                authManager.registerUser(loginData);
             }
         });
 

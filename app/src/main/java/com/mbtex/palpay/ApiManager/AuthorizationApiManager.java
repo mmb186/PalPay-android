@@ -1,31 +1,103 @@
 package com.mbtex.palpay.ApiManager;
 
-import android.util.Log;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.LruCache;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AuthorizationApiManager extends ApiManager {
+    private static AuthorizationApiManager _autherizationManager;
+    private RequestQueue _queue;
+    private ImageLoader _imageLoader;
+    private static Context _ctx;
 
+    private AuthorizationApiManager(Context context) {
+        _ctx = context;
+        _queue = getRequestQueue();
 
-    public AuthorizationApiManager() {}
+        _imageLoader = new ImageLoader(_queue, new ImageLoader.ImageCache() {
+            private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap> (20);
 
+            @Override
+            public Bitmap getBitmap(String url) {
+                return cache.get(url);
+            }
 
-    public String loginUser(String username, String password) {
-        return "";
+            @Override
+            public void putBitmap(String url, Bitmap bitmap) {
+                cache.put(url, bitmap);
+            }
+        });
     }
 
-    public String registerUser(JSONObject formData)
+    public static synchronized AuthorizationApiManager getAuthorizationManager(Context ctx) {
+        if (_autherizationManager == null) {
+            _autherizationManager = new AuthorizationApiManager(ctx);
+        }
+        return _autherizationManager;
+    }
+
+    private RequestQueue getRequestQueue() {
+        if (_queue == null) {
+            _queue = Volley.newRequestQueue(_ctx);
+        }
+        return _queue;
+    }
+
+    public <T> void addToRequestQueue(Request<T> req) {
+        getRequestQueue().add(req);
+    }
+
+    public ImageLoader get_imageLoader() {
+        return _imageLoader;
+    }
+
+
+    public void loginUser(String username, String password) {}
+
+    public void registerUser(JSONObject formData)
     {
-        String req_data;
-        req_data = this.doInBackground(_baseURL.concat("/create_user/"), formData.toString());
-        System.out.println(req_data);
-        return req_data;
+        String register_user_route = _baseURL + "/create_user/";
+        JsonObjectRequest registerUserRequest = new JsonObjectRequest(Request.Method.POST, register_user_route, formData,
+
+        new Response.Listener<JSONObject> () {
+            @Override
+            public void onResponse(JSONObject response) {
+                String res = "";
+                Toast.makeText(_ctx, "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        },
+        new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String e = error.getMessage();
+                Toast.makeText(_ctx, "Response: " + e, Toast.LENGTH_SHORT).show();
+
+            }
+        })
+        {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+//                headers.put("Authorization", "" + ""); //put your token here
+                return headers;
+            }
+        };
+        _queue.add(registerUserRequest);
     }
 
     public Boolean logoutUser (String username)
@@ -37,49 +109,5 @@ public class AuthorizationApiManager extends ApiManager {
     {
         return "";
     }
-
-    @Override
-    protected String doInBackground(String... params) {
-        String request_data = "";
-
-        HttpURLConnection httpURLConnection = null;
-
-        try {
-            httpURLConnection = (HttpURLConnection) new URL(params[0]).openConnection();
-            httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setDoOutput(true);
-
-            DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
-            wr.writeBytes("PostData=" + params[1]);
-            wr.flush();
-            wr.close();
-
-            InputStream in = httpURLConnection.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(in);
-
-            int inputStreamData = inputStreamReader.read();
-            while (inputStreamData != -1)
-            {
-                char current = (char) inputStreamData;
-                inputStreamData = inputStreamReader.read();
-                request_data += current;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            if(httpURLConnection != null) {
-                httpURLConnection.disconnect();
-            }
-        }
-        return request_data;
-    }
-
-    @Override
-    protected void onPostExecute(String result) {
-        super.onPostExecute(result);
-        Log.e("TAG", result);
-    }
-
 
 }
