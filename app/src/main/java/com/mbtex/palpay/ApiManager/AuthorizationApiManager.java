@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuthorizationApiManager extends ApiManager {
-    private static AuthorizationApiManager _autherizationManager;
+    private static AuthorizationApiManager _authorizationManager;
     private RequestQueue _queue;
     private ImageLoader _imageLoader;
     private static Context _ctx;
@@ -45,10 +45,10 @@ public class AuthorizationApiManager extends ApiManager {
     }
 
     public static synchronized AuthorizationApiManager getAuthorizationManager(Context ctx) {
-        if (_autherizationManager == null) {
-            _autherizationManager = new AuthorizationApiManager(ctx);
+        if (_authorizationManager == null) {
+            _authorizationManager = new AuthorizationApiManager(ctx);
         }
-        return _autherizationManager;
+        return _authorizationManager;
     }
 
     private RequestQueue getRequestQueue() {
@@ -79,7 +79,7 @@ public class AuthorizationApiManager extends ApiManager {
             public void onResponse(JSONObject response) {
                 String res = "";
                 Toast.makeText(_ctx, "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
-
+                // TODO: Change intent to new Dashboard Screen.
             }
         },
         new Response.ErrorListener() {
