@@ -39,11 +39,11 @@ public class SignUp extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                JSONObject loginData = new JSONObject();
-                addLoginFormValues(loginData);
+                JSONObject signUpData = new JSONObject();
+                addSignUpFormValues(signUpData);
 
                 AuthorizationApiManager authManager = AuthorizationApiManager.getAuthorizationManager(getCtx());
-                authManager.registerUser(loginData);
+                authManager.registerUser(signUpData);
             }
         });
 
@@ -75,7 +75,7 @@ public class SignUp extends AppCompatActivity {
         registerButtonListeners();
     }
 
-    public void addLoginFormValues(JSONObject data) {
+    public void addSignUpFormValues(JSONObject data) {
 
         try {
             data.put("email", email.getText().toString());

@@ -67,7 +67,36 @@ public class AuthorizationApiManager extends ApiManager {
     }
 
 
-    public void loginUser(String username, String password) {}
+    public void loginUser(JSONObject loginData) {
+        String login_route = _baseURL + "/login/";
+
+        JsonObjectRequest loginUserRequest = new JsonObjectRequest(Request.Method.POST, login_route, loginData,
+        new Response.Listener<JSONObject> () {
+            @Override
+            public void onResponse(JSONObject response) {
+                String res = "";
+                Toast.makeText(_ctx, "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
+                // TODO: Change intent to new Dashboard Screen.
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String e = error.getMessage();
+                        Toast.makeText(_ctx, "Response: " + e, Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+        {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+            final Map<String, String> headers = new HashMap<>();
+//                headers.put("Authorization", "" + ""); //put your token here
+            return headers;
+        }
+        };
+
+        _queue.add(loginUserRequest);
+    }
 
     public void registerUser(JSONObject formData)
     {

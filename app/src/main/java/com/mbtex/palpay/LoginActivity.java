@@ -31,6 +31,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mbtex.palpay.ApiManager.AuthorizationApiManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -189,6 +194,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
+            JSONObject loginData = new JSONObject();
+            try {
+                loginData.put("email", email);
+                loginData.put("password", password);
+            }
+            catch(JSONException e) {
+                e.printStackTrace();
+            }
+
+            AuthorizationApiManager.getAuthorizationManager(this.getApplicationContext()).
+                    loginUser(loginData);
+
             mAuthTask.execute((Void) null);
         }
     }
