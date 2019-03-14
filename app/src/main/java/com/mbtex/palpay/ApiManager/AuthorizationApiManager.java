@@ -96,6 +96,7 @@ public class AuthorizationApiManager extends ApiManager {
         };
 
         _queue.add(loginUserRequest);
+        // Demo Git
     }
 
     public void registerUser(JSONObject formData)
