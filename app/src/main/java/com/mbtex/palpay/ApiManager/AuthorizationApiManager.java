@@ -1,7 +1,9 @@
 package com.mbtex.palpay.ApiManager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.v7.app.AppCompatActivity;
 import android.util.LruCache;
 import android.widget.Toast;
 
@@ -13,6 +15,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.mbtex.palpay.Dashboard;
+import com.mbtex.palpay.User.User;
 
 import org.json.JSONObject;
 
@@ -67,7 +71,11 @@ public class AuthorizationApiManager extends ApiManager {
     }
 
 
-    public void loginUser(JSONObject loginData) {
+    /*
+    * LoginUser
+    * Api Call to Log User in and instantiates the user object.
+    * */
+    public void loginUser(JSONObject loginData, final AppCompatActivity callingActivity) {
         String login_route = _baseURL + "/login/";
 
         JsonObjectRequest loginUserRequest = new JsonObjectRequest(Request.Method.POST, login_route, loginData,
@@ -76,6 +84,13 @@ public class AuthorizationApiManager extends ApiManager {
             public void onResponse(JSONObject response) {
                 String res = "";
                 Toast.makeText(_ctx, "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
+
+                User current_user = User.getUser("MoeB", response.toString(), "test@test.com","" );
+
+                Intent intent = new Intent(callingActivity, Dashboard.class);
+                intent.putExtra("current_user", current_user);
+                callingActivity.startActivity(intent);
+
                 // TODO: Change intent to new Dashboard Screen.
             }
         },
@@ -99,6 +114,10 @@ public class AuthorizationApiManager extends ApiManager {
         // Demo Git
     }
 
+    /*
+     * Register User
+     * Api Call to Register User in and instantiates the user object.
+     * */
     public void registerUser(JSONObject formData)
     {
         String register_user_route = _baseURL + "/create_user/";
