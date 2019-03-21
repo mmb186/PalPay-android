@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.mbtex.palpay.ApiManager.TabApiManager;
 import com.mbtex.palpay.Tabs.Tab;
 import com.mbtex.palpay.Tabs.TabRecyclerViewAdapter;
 import com.mbtex.palpay.User.User;
@@ -19,6 +20,7 @@ public class Dashboard extends AppCompatActivity {
     private static final String TAG = "Dashboard";
     private ArrayList<Tab> my_tabs = new ArrayList<>();
     private User current_user;
+    private double _balance;
 
 
     private void registerClickListeners() {
@@ -48,16 +50,17 @@ public class Dashboard extends AppCompatActivity {
         registerClickListeners();
         Log.d(TAG, "onCreate: Registered Click Listeners");
         addTabsToTabList();
-        initRecyclerView();
+//        initRecyclerView();
     }
 
     private void addTabsToTabList() {
         Log.d(TAG, "initiateRecyclerViewTabs: Initiating List View Items");
+        TabApiManager.getTabApiManager(this.getApplicationContext()).
+                get_user_tabs(current_user, Dashboard.this, my_tabs, this._balance);
+    }
 
-        my_tabs.add(new Tab("Grocery", "ACTIVE", 32f, 1));
-        my_tabs.add(new Tab("Roommates", "ACTIVE", 45.2f,2));
-        my_tabs.add(new Tab("Johnny", "ACTIVE", 15.4f,3));
-        my_tabs.add(new Tab("Test", "PENDING", 105.32f,4));
+    public void updateBalance(double new_balance) {
+        this._balance = new_balance;
     }
 
     private void initRecyclerView() {

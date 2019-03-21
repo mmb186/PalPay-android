@@ -34,7 +34,6 @@ public class SignUp extends AppCompatActivity {
     {
         Log.i("info", "Register sign up Click Listeners");
         final Button signup_button = (Button) findViewById(R.id.sign_up_button);
-        this.getApplicationContext();
         signup_button.setOnClickListener(new View.OnClickListener() {
 
             @Override

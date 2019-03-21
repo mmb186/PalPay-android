@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.mbtex.palpay.Dashboard;
 import com.mbtex.palpay.User.User;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -82,10 +83,19 @@ public class AuthorizationApiManager extends ApiManager {
         new Response.Listener<JSONObject> () {
             @Override
             public void onResponse(JSONObject response) {
-                String res = "";
+                String auth_token= "";
+                String username = "MoeB";
+                String email = "test@test.com";
                 Toast.makeText(_ctx, "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
 
-                User current_user = User.getUser("MoeB", response.toString(), "test@test.com","" );
+                try {
+                    auth_token = (String) response.get("auth_token");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                User current_user = User.getUser(
+                        username, auth_token, email,"" );
 
                 Intent intent = new Intent(callingActivity, Dashboard.class);
                 intent.putExtra("current_user", current_user);
