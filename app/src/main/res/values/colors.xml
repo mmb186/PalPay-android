@@ -5,4 +5,12 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <!--Dashboard - TABS-->
+    <color name="tabName">#535353</color>
+    <color name="tabStatsACTIVE">#a9a9a9</color>
+    <color name="tabStatsPENDING">#535353</color>
+    <color name="tabPositiveBalance">#535353</color>
+    <color name="tabNegativeBalance">#535353</color>
+    <color name="bgRowDecline">#FA315B</color>
 </resources>

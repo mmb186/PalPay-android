@@ -1,11 +1,13 @@
 package com.mbtex.palpay;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 
@@ -54,7 +56,6 @@ public class Dashboard extends AppCompatActivity {
         registerClickListeners();
         Log.d(TAG, "onCreate: Registered Click Listeners");
         addTabsToTabList();
-//        initRecyclerView();
     }
 
     private void addTabsToTabList() {
@@ -68,15 +69,6 @@ public class Dashboard extends AppCompatActivity {
                 );
     }
 
-
-    class InitiateRecyclerViewCommand implements VolleyCallBack {
-        @Override
-        public void onSuccessCallBack(String... args) {
-            initRecyclerView();
-        }
-    }
-
-
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerView");
 
@@ -85,5 +77,35 @@ public class Dashboard extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+    class InitiateRecyclerViewCommand implements VolleyCallBack {
+        @Override
+        public void onSuccessCallBack(String... args) {
+            initRecyclerView();
+            enableSwipe();
+        }
+    }
+
+    public void enableSwipe() {
+        ItemTouchHelper.SimpleCallback tabTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int swipeDirection) {
+                int position = viewHolder.getAdapterPosition();
+
+                if (swipeDirection == ItemTouchHelper.LEFT )
+                {
+//                    final Model tabToDelete =
+                }
+
+            }
+        };
+
+    }
+
 
 }

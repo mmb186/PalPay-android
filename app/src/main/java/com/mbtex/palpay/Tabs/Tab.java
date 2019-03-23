@@ -31,4 +31,6 @@ public class Tab {
     public int getId() {
         return this._id;
     }
+
+    public String getUser_tab_status() {return this.user_tab_status;}
 }

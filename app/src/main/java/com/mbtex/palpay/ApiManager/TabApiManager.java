@@ -139,7 +139,8 @@ public class TabApiManager extends ApiManager{
                                 (new Tab(
                                     temp_tab.getString("name"),
                                     temp_tab.getString("tab_status"),
-                                    (float) temp_tab.getDouble("balance"), i,
+                                    (float) temp_tab.getDouble("balance"),
+                                    temp_tab.getInt("tab_id"),
                                     temp_tab.getString("user_tab_status")
                                     )
                                 );
