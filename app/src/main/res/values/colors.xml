@@ -13,4 +13,5 @@
     <color name="tabPositiveBalance">#535353</color>
     <color name="tabNegativeBalance">#535353</color>
     <color name="bgRowDecline">#FA315B</color>
+    <color name="bgRowApprove">#1C6406</color>
 </resources>

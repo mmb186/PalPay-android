@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mbtex.palpay.ApiManager.TabApiManager;
 import com.mbtex.palpay.ApiManager.VolleyCallBack;
@@ -55,6 +57,12 @@ public class Dashboard extends AppCompatActivity {
 
         registerClickListeners();
         Log.d(TAG, "onCreate: Registered Click Listeners");
+//        addTabsToTabList();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         addTabsToTabList();
     }
 
@@ -73,20 +81,11 @@ public class Dashboard extends AppCompatActivity {
         Log.d(TAG, "initRecyclerView: init recyclerView");
 
         RecyclerView recyclerView = findViewById(R.id.tabs_recycler_view);
-        TabRecyclerViewAdapter adapter = new TabRecyclerViewAdapter(this, my_tabs);
+        final TabRecyclerViewAdapter adapter = new TabRecyclerViewAdapter(this, my_tabs);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
 
-    class InitiateRecyclerViewCommand implements VolleyCallBack {
-        @Override
-        public void onSuccessCallBack(String... args) {
-            initRecyclerView();
-            enableSwipe();
-        }
-    }
 
-    public void enableSwipe() {
         ItemTouchHelper.SimpleCallback tabTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
@@ -96,15 +95,36 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int swipeDirection) {
                 int position = viewHolder.getAdapterPosition();
+                Tab tab_swiped = adapter.getTab(position);
 
+                // Declining Tab
                 if (swipeDirection == ItemTouchHelper.LEFT )
                 {
-//                    final Model tabToDelete =
+                    Log.d(TAG, "onSwiped: SWIPED LEFT");
+                    adapter.removeTab(position);
+                    Toast.makeText(Dashboard.this, "SWIPED LEFT", Toast.LENGTH_SHORT).show();
                 }
-
+                // approving Tab
+                else {
+                    Log.d(TAG, "onSwiped: Swiped Right");
+                    Toast.makeText(Dashboard.this, "SWIPED RIGHT", Toast.LENGTH_SHORT).show();
+                }
             }
         };
 
+        ItemTouchHelper tabTouchHelper = new ItemTouchHelper(tabTouchCallback);
+        tabTouchHelper.attachToRecyclerView(recyclerView);
+
+
+
+
+    }
+
+    class InitiateRecyclerViewCommand implements VolleyCallBack {
+        @Override
+        public void onSuccessCallBack(String... args) {
+            initRecyclerView();
+        }
     }
 
 

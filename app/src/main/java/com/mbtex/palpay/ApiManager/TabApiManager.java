@@ -132,6 +132,7 @@ public class TabApiManager extends ApiManager{
                         try {
 
                             JSONArray temp_tabs = response.getJSONObject("data").getJSONArray("tabs");
+                            tab.clear();
                             for (int i  = 0; i < response.getJSONObject("data").getJSONArray("tabs").length(); i++)
                             {
                                 JSONObject temp_tab = (JSONObject) temp_tabs.get(i);

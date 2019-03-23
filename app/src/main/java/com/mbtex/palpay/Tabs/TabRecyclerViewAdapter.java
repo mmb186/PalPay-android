@@ -80,6 +80,10 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
         return tabs_list.size();
     }
 
+    public Tab getTab(int position) {
+        return tabs_list.get(position);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tab_name;
         TextView tab_status;
