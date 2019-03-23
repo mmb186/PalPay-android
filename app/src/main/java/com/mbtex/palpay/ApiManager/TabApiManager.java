@@ -1,7 +1,6 @@
 package com.mbtex.palpay.ApiManager;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.util.LruCache;
@@ -19,6 +18,7 @@ import com.mbtex.palpay.Dashboard;
 import com.mbtex.palpay.Tabs.Tab;
 import com.mbtex.palpay.User.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -112,36 +112,42 @@ public class TabApiManager extends ApiManager{
         _queue.add(createTabRequest);
     }
 
-    public void get_user_tabs(final User current_user, final Dashboard actingActivity, final ArrayList<Tab> tab, final double balance)
+    public void get_user_tabs(
+            final User current_user,
+            final Dashboard actingActivity,
+            final ArrayList<Tab> tab,
+            final VolleyCallBack callback
+    )
     {
         String get_user_tab_route = _baseURL + "/get_all_user_tabs";
         ArrayList<Tab> userTabs;
+        System.out.println("GET USER TABS");
 
         JsonObjectRequest createTabRequest = new JsonObjectRequest(Request.Method.GET, get_user_tab_route, null,
                 new Response.Listener<JSONObject> () {
                     AppCompatActivity temp = actingActivity;
                     @Override
                     public void onResponse(JSONObject response) {
-                        String res = "";
 
-//                        try {
-//                            balance = (double)response.get("balance") .get("balance");
-//
-//                            for (int i  = 0; i < response.get("data").get("tabs").values.size(); i++)
-//                            {
-//                                JSONObject temp = response.get("data").get("tabs").values.get(i);
-//                                Tab t = new Tab(
-//                                        temp.get("name"),
-//                                        temp.get("Status"),
-//                                        temp.get("balance"),
-//                                        i,
-//                                        temp.get("user_tab_status")
-//                                        );
-//                                tab.add(t);
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+
+                            JSONArray temp_tabs = response.getJSONObject("data").getJSONArray("tabs");
+                            for (int i  = 0; i < response.getJSONObject("data").getJSONArray("tabs").length(); i++)
+                            {
+                                JSONObject temp_tab = (JSONObject) temp_tabs.get(i);
+                                tab.add
+                                (new Tab(
+                                    temp_tab.getString("name"),
+                                    temp_tab.getString("tab_status"),
+                                    (float) temp_tab.getDouble("balance"), i,
+                                    temp_tab.getString("user_tab_status")
+                                    )
+                                );
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        callback.onSuccessCallBack();
                     }
                 },
                 new Response.ErrorListener() {
@@ -154,7 +160,7 @@ public class TabApiManager extends ApiManager{
         {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 final Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", current_user.getAuthToken()); //put your token here
+                headers.put("Authorization", current_user.getAuthToken());
                 return headers;
             }
         };

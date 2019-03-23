@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.mbtex.palpay.ApiManager.TabApiManager;
+import com.mbtex.palpay.ApiManager.VolleyCallBack;
 import com.mbtex.palpay.Tabs.Tab;
 import com.mbtex.palpay.Tabs.TabRecyclerViewAdapter;
 import com.mbtex.palpay.User.User;
@@ -20,6 +21,8 @@ public class Dashboard extends AppCompatActivity {
     private static final String TAG = "Dashboard";
     private ArrayList<Tab> my_tabs = new ArrayList<>();
     private User current_user;
+
+//    TODO: Create Summary Chart!
     private double _balance;
 
 
@@ -38,6 +41,7 @@ public class Dashboard extends AppCompatActivity {
     public void handleNewTabClick(View view) {
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +60,22 @@ public class Dashboard extends AppCompatActivity {
     private void addTabsToTabList() {
         Log.d(TAG, "initiateRecyclerViewTabs: Initiating List View Items");
         TabApiManager.getTabApiManager(this.getApplicationContext()).
-                get_user_tabs(current_user, Dashboard.this, my_tabs, this._balance);
+                get_user_tabs(
+                        current_user,
+                        Dashboard.this,
+                        my_tabs,
+                        new InitiateRecyclerViewCommand()
+                );
     }
 
-    public void updateBalance(double new_balance) {
-        this._balance = new_balance;
+
+    class InitiateRecyclerViewCommand implements VolleyCallBack {
+        @Override
+        public void onSuccessCallBack(String... args) {
+            initRecyclerView();
+        }
     }
+
 
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerView");
