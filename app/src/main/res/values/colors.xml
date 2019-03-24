@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#1E3C56</color> <!-- main bar color old color was 008577 -->
+    <color name="colorBackground">#F9FFE5</color> <!-- white background color -->
+    <color name="colorClickable">#2851B2</color> <!-- slightly lighter blue. also used as positive color -->
+    <color name="colorOnClick">#3E7085</color> <!-- even lighter blue to show a button was pressed -->
+    <color name="colorNegative">#F2535D</color> <!-- a red to act as a color for warnings or negative balances -->
+    <color name="colorLightGrey">#DCDCDD</color> <!-- for text boxes that need to be slightly visible -->
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#20425E</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>

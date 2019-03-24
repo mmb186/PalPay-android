@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@color/colorPrimary"
     tools:context=".LandingActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -16,7 +16,7 @@
         android:gravity="center"
         android:keepScreenOn="true"
         android:text="PalPay"
-        android:textColor="#33b5e5"
+        android:textColor="@color/colorBackground"
         android:textSize="50sp"
         android:textStyle="bold|italic" />
 
@@ -47,6 +47,7 @@
                 android:elevation="6dp"
                 android:onClick="handleLoginButtonClick"
                 android:text="Login"
+                android:textColor="@color/colorBackground"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textSize="24sp"
@@ -61,6 +62,7 @@
                 android:elevation="8dp"
                 android:onClick="handleSignUpButtonClick"
                 android:text="Sign Up"
+                android:textColor="@color/colorBackground"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textSize="24sp"
