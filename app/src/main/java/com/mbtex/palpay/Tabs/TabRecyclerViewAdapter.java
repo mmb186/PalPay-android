@@ -45,6 +45,11 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
         // TODO
     }
 
+
+    public void onItemDismiss(int position) {
+        notifyItemChanged(position);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
