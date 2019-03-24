@@ -109,7 +109,6 @@ public class AuthorizationApiManager extends ApiManager {
                     public void onErrorResponse(VolleyError error) {
                         String e = error.getMessage();
                         Toast.makeText(_ctx, "Response: " + e, Toast.LENGTH_SHORT).show();
-
                     }
                 })
         {

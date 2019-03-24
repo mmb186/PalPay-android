@@ -1,7 +1,6 @@
 package com.mbtex.palpay.Tabs;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,12 +20,34 @@ import java.util.ArrayList;
 public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "TabRecyclerViewAdapter";
 
-    private ArrayList<Tab> tabs = new ArrayList<>();
+    private ArrayList<Tab> tabs_list = new ArrayList<>();
     private Context ctx;
 
-    public TabRecyclerViewAdapter(Context ctx, ArrayList<Tab> tabs) {
-        this.tabs = tabs;
+    public TabRecyclerViewAdapter(Context ctx, ArrayList<Tab> tabs_list) {
+        this.tabs_list = tabs_list;
         this.ctx = ctx;
+    }
+
+    /*
+    * Decline Tab will result in tab being removed
+    * */
+    public void removeTab(int position) {
+        tabs_list.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, tabs_list.size());
+    }
+
+
+    /*
+    * Update Tab Status
+    * */
+    public void updateTabStatusToApprove(int position, String Status) {
+        // TODO
+    }
+
+
+    public void onItemDismiss(int position) {
+        notifyItemChanged(position);
     }
 
     @NonNull
@@ -41,18 +62,18 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         Log.d(TAG, "onBindViewHolder called.");
 
-        viewHolder.tab_name.setText(tabs.get(position).getName());
-        viewHolder.tab_status.setText(tabs.get(position).getStatus());
-        viewHolder.tab_balance.setAmount(tabs.get(position).getBalance());
+        viewHolder.tab_name.setText(tabs_list.get(position).getName());
+        viewHolder.tab_status.setText(tabs_list.get(position).getStatus());
+        viewHolder.tab_balance.setAmount(tabs_list.get(position).getBalance());
 
         viewHolder.tab_parent_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clickedON: " + tabs.get(position).getName());
+                Log.d(TAG, "onClick: clickedON: " + tabs_list.get(position).getName());
 
                 Toast.makeText(
                     ctx,
-                    tabs.get(position).getName() + " " + Integer.toString(tabs.get(position).getId()),
+                    tabs_list.get(position).getName() + " " + Integer.toString(tabs_list.get(position).getId()),
                     Toast.LENGTH_SHORT)
                         .show();
             }
@@ -61,7 +82,11 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
 
     @Override
     public int getItemCount() {
-        return tabs.size();
+        return tabs_list.size();
+    }
+
+    public Tab getTab(int position) {
+        return tabs_list.get(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -69,7 +94,6 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
         TextView tab_status;
         MoneyTextView tab_balance;
         RelativeLayout tab_parent_layout;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
