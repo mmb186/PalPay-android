@@ -8,6 +8,9 @@ public class Tab {
     private float balance;
     private int _id;
 
+    public static String TAB_APPROVED = "APPROVED";
+    public static String TAB_PENDING = "PENDING";
+    public static String TAB_INACTIVE = "INACTIVE";
     public Tab(String name, String status, float balance, int id, String user_tab_status) {
         this.name = name;
         this.tab_status = status;
@@ -32,5 +35,10 @@ public class Tab {
         return this._id;
     }
 
-    public String getUser_tab_status() {return this.user_tab_status;}
+    public String getUserTabStatus() {return this.user_tab_status;}
+
+    public void updateStatus(String new_tab_status) {
+        this.user_tab_status = new_tab_status;
+        this.tab_status = new_tab_status;
+    }
 }

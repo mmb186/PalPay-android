@@ -168,4 +168,37 @@ public class TabApiManager extends ApiManager{
         };
         _queue.add(createTabRequest);
     }
+
+    public void update_tab_status (JSONObject newStatus, final User current_user, final AppCompatActivity callingActivity)     {
+        String update_user_tab_status = _baseURL + "/set_user_tab_status/";
+
+        JsonObjectRequest createTabRequest = new JsonObjectRequest(Request.Method.POST, update_user_tab_status, newStatus,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(callingActivity, "tab status Update!", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String e = error.getMessage();
+                        if (e.equals("DNE")) {
+                            // user does not exist
+                        } else if (e.equals("Can't add yourself")) {
+                            // can't add yourself
+                        } else
+                            Toast.makeText(_ctx, "Response: " + e, Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", current_user.getAuthToken());
+                return headers;
+            }
+        };
+        _queue.add(createTabRequest);
+    }
+
 }

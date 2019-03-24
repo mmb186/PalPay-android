@@ -33,6 +33,9 @@ import com.mbtex.palpay.Tabs.Tab;
 import com.mbtex.palpay.Tabs.TabRecyclerViewAdapter;
 import com.mbtex.palpay.User.User;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
@@ -156,6 +159,7 @@ public class Dashboard extends AppCompatActivity {
                                 (float) itemView.getBottom(),
                                 p
                         );
+
                         // Draw Icon
                         icon = GeneralHelpers.getBitmapFromDrawable(getApplicationContext(), R.drawable.ic_close_white_24dp);
                         float top_pt = (float) itemView.getRight() + convertDpToPx(16) - icon.getWidth() - SWIPE_LEFT_TRANSLATION_CONSTANT;
@@ -169,8 +173,8 @@ public class Dashboard extends AppCompatActivity {
                     }
 
                     // Fade out view after item is swiped out of parent
-//                    final float alpha = ALPHA_FULL - Math.abs(dX);
-//                    viewHolder.itemView.setAlpha(alpha);
+                    final float alpha = ALPHA_FULL - Math.abs(dX);
+                    viewHolder.itemView.setAlpha(alpha);
                     viewHolder.itemView.setTranslationX(dX);
                 } else {
                     Log.d(TAG, "onChildDraw: Action is not swipe");
@@ -182,21 +186,45 @@ public class Dashboard extends AppCompatActivity {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int swipeDirection) {
                 int position = viewHolder.getAdapterPosition();
                 Tab tab_swiped = adapter.getTab(position);
+                String new_tab_status = "";
 
-                // Declining Tab
-                if (swipeDirection == ItemTouchHelper.LEFT)
+                if (tab_swiped.getStatus().equals(Tab.TAB_PENDING))
                 {
-                    Log.d(TAG, "onSwiped: SWIPED LEFT");
-                    adapter.removeTab(position);
-                    Toast.makeText(Dashboard.this, "SWIPED LEFT", Toast.LENGTH_SHORT).show();
-                }
-                // approving Tab
-                else {
-                    Log.d(TAG, "onSwiped: Swiped Right");
-                    Toast.makeText(Dashboard.this, "SWIPED RIGHT", Toast.LENGTH_SHORT).show();
-                }
-            }
+                    Log.d(TAG, "onSwiped: Updated Tab " + tab_swiped.getName() + "status");
 
+                    if (swipeDirection == ItemTouchHelper.LEFT)
+                    {
+                    // Declining Tab
+                        new_tab_status = Tab.TAB_INACTIVE;
+                        Log.d(TAG, "onSwiped: SWIPED LEFT");
+                        adapter.removeTab(position);
+                        adapter.notifyItemRemoved(position);
+                        Toast.makeText(Dashboard.this, "SWIPED LEFT", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        {
+                    // approving Tab
+                        new_tab_status = Tab.TAB_APPROVED;
+                        Log.d(TAG, "onSwiped: Swiped Right");
+                        Toast.makeText(Dashboard.this, "SWIPED RIGHT", Toast.LENGTH_SHORT).show();
+                        tab_swiped.updateStatus(new_tab_status);
+
+                        adapter.notifyItemChanged(position);
+
+                    }
+                    updateAPIWithNewStatus(tab_swiped.getId(), tab_swiped.getUserTabStatus());
+
+                } else {
+                    if (swipeDirection == ItemTouchHelper.LEFT)
+                        Toast.makeText(Dashboard.this, "Cannot Delete Active Tab.", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(Dashboard.this, "Tab is Already Active.", Toast.LENGTH_SHORT).show();
+
+                    adapter.notifyItemChanged(position);
+                }
+
+
+            }
         };
 
         ItemTouchHelper tabTouchHelper = new ItemTouchHelper(tabTouchCallback);
@@ -208,5 +236,18 @@ public class Dashboard extends AppCompatActivity {
         public void onSuccessCallBack(String... args) {
             initRecyclerView();
         }
+    }
+
+    void updateAPIWithNewStatus(int tab_id, String newStatus) {
+        JSONObject tabData = new JSONObject();
+
+        try {
+            tabData.put("tab_id", Integer.toString(tab_id));
+            tabData.put("tab_status", newStatus);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        TabApiManager.getTabApiManager(getApplicationContext())
+                .update_tab_status(tabData, current_user, Dashboard.this);
     }
 }
