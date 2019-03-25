@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" 
     android:layout_height="wrap_content"
     android:padding="15dp"
+    android:id="@+id/transaction_parent_layout"
     >
     
     <de.hdodenhof.circleimageview.CircleImageView
@@ -21,7 +23,7 @@
         android:text="Canada"
         android:layout_toRightOf="@+id/user_transaction_image"
         android:textColor="#000"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="15dp"
         android:textSize="18sp"
         />
@@ -33,9 +35,22 @@
         android:layout_toRightOf="@+id/user_transaction_image"
         android:layout_below="@id/transaction_owner"
         android:textColor="#000"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2.5dp"
         android:layout_marginLeft="15dp"
         android:textSize="13sp"
+        />
+
+    <TextView
+        android:id="@+id/transaction_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PENDING"
+        android:layout_toRightOf="@+id/user_transaction_image"
+        android:layout_below="@id/transaction_date"
+        android:textColor="#000"
+        android:layout_marginTop="2.5dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="15sp"
         />
 
     <TextView
