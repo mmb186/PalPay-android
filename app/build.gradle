@@ -35,4 +35,11 @@ dependencies {
 
     // Money View
     implementation 'org.fabiomsr:moneytextview:1.1.0'
+
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
+    // circle image view
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 }
