@@ -101,7 +101,6 @@ public class AuthorizationApiManager extends ApiManager {
                 intent.putExtra("current_user", current_user);
                 callingActivity.startActivity(intent);
 
-                // TODO: Change intent to new Dashboard Screen.
             }
         },
                 new Response.ErrorListener() {

@@ -34,7 +34,11 @@
             android:name=".Dashboard"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CreateTab"></activity>
+        <activity android:name=".CreateTab" />
+        <activity
+            android:name=".DetailTabView"
+            android:label="@string/title_activity_detail_tab_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

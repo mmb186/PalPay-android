@@ -1,7 +1,9 @@
 package com.mbtex.palpay.Tabs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mbtex.palpay.DetailTabView;
 import com.mbtex.palpay.R;
+import com.mbtex.palpay.User.User;
 
 import org.fabiomsr.moneytextview.MoneyTextView;
 
@@ -22,10 +26,12 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
 
     private ArrayList<Tab> tabs_list = new ArrayList<>();
     private Context ctx;
+    User current_user;
 
-    public TabRecyclerViewAdapter(Context ctx, ArrayList<Tab> tabs_list) {
+    public TabRecyclerViewAdapter(Context ctx, ArrayList<Tab> tabs_list, User current_user) {
         this.tabs_list = tabs_list;
         this.ctx = ctx;
+        this.current_user = current_user;
     }
 
     /*
@@ -35,14 +41,6 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
         tabs_list.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, tabs_list.size());
-    }
-
-
-    /*
-    * Update Tab Status
-    * */
-    public void updateTabStatusToApprove(int position, String Status) {
-        // TODO
     }
 
 
@@ -71,11 +69,25 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clickedON: " + tabs_list.get(position).getName());
 
-                Toast.makeText(
-                    ctx,
-                    tabs_list.get(position).getName() + " " + Integer.toString(tabs_list.get(position).getId()),
-                    Toast.LENGTH_SHORT)
-                        .show();
+
+                if (getTab(position).getStatus().equals("ACTIVE")) {
+                    Intent intent = current_user.createIntentAndAddSelf((AppCompatActivity) ctx, DetailTabView.class);
+                intent.putExtra("tab_id", getTab(position).getId());
+                ctx.startActivity(intent);
+                } else{
+                    String cannotAccessTabMessage = "";
+                    if(getTab(position).getUserTabStatus().equals("APPROVED"))
+                        cannotAccessTabMessage = "All Users have not approved the Tab yet";
+                    else
+                        cannotAccessTabMessage = "Approve tab before you can access";
+                    Toast.makeText(
+                            ctx,
+                            cannotAccessTabMessage,
+                            Toast.LENGTH_SHORT)
+                            .show();
+
+                    // TODO: Go to Detailed Tab View.
+                }
             }
         });
     }

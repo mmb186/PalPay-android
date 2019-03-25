@@ -54,7 +54,6 @@ public class Dashboard extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG) .setAction("Action", null).show();
                 startActivity(current_user.createIntentAndAddSelf(localContext, CreateTab.class));
             }
         });
@@ -75,7 +74,6 @@ public class Dashboard extends AppCompatActivity {
 
         registerClickListeners();
         Log.d(TAG, "onCreate: Registered Click Listeners");
-//        addTabsToTabList();
     }
 
     @Override
@@ -99,7 +97,7 @@ public class Dashboard extends AppCompatActivity {
         Log.d(TAG, "initRecyclerView: init recyclerView");
 
         RecyclerView recyclerView = findViewById(R.id.tabs_recycler_view);
-        final TabRecyclerViewAdapter adapter = new TabRecyclerViewAdapter(this, my_tabs);
+        final TabRecyclerViewAdapter adapter = new TabRecyclerViewAdapter(this, my_tabs, current_user);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
