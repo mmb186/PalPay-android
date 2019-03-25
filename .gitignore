@@ -119,3 +119,4 @@ gradle-app.setting
 #
 
 .DS_store
+.idea/workspace.xml
