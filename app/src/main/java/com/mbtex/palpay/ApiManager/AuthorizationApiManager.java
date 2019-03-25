@@ -101,7 +101,6 @@ public class AuthorizationApiManager extends ApiManager {
                 intent.putExtra("current_user", current_user);
                 callingActivity.startActivity(intent);
 
-                // TODO: Change intent to new Dashboard Screen.
             }
         },
                 new Response.ErrorListener() {
@@ -109,7 +108,6 @@ public class AuthorizationApiManager extends ApiManager {
                     public void onErrorResponse(VolleyError error) {
                         String e = error.getMessage();
                         Toast.makeText(_ctx, "Response: " + e, Toast.LENGTH_SHORT).show();
-
                     }
                 })
         {

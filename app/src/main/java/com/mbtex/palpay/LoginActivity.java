@@ -203,6 +203,10 @@ public class LoginActivity extends AppCompatActivity {
         return password.length() > 4;
     }
 
+    public void notifyWhenLoggedIn() {
+        showProgress(false);
+    }
+
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -243,5 +247,12 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(this, SignUp.class));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Hide Spinner when you reOpen it.
+        showProgress(false);
+    }
 }
 

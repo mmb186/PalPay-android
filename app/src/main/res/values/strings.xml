@@ -33,5 +33,6 @@
     <string name="prompt_other_user">Participant (username)</string>
     <string name="error_user_does_not_exist">User does not exist</string>
     <string name="error_cannot_add_yourself_to_tab">Cannot add yourself to the tab</string>
+    <string name="title_activity_detail_tab_view">DetailTabView</string>
 
 </resources>
