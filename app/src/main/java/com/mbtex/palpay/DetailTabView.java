@@ -52,6 +52,8 @@ public class DetailTabView extends AppCompatActivity {
         current_user = getIntent().getExtras().getParcelable("current_user");
         int tab_id = getIntent().getExtras().getInt("tab_id");
 
+        registerClickListeners();
+
         User current_user;
         myDialog = new Dialog(this);
     }
