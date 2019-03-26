@@ -206,8 +206,7 @@ public class TabApiManager extends ApiManager{
             final User current_user,
             int tabId,
             final ArrayList<TabTransaction> tab_transactions,
-            final VolleyCallBack callback,
-            final VolleyCallBack getDisplayPictureSRC
+            final VolleyCallBack callback
     )
     {
         String get_user_tab_route = _baseURL + "/get_tab_details/" + Integer.toString(tabId) + "/";
@@ -228,11 +227,12 @@ public class TabApiManager extends ApiManager{
                                 JSONObject tempTabTransaction = (JSONObject) tabTransactions.get(i);
                                 tab_transactions.add
                                         (new TabTransaction(
-                                                getImageSRC(),
+                                                getImageSRC(current_user.getUserName().equals(tempTabTransaction.getString("username"))),
                                                 tempTabTransaction.getString("username"),
                                                 tempTabTransaction.getString("transaction_status"),
+                                                tempTabTransaction.getString("user_transaction_status"),
                                                 tempTabTransaction.getString("creation_time"),
-                                                tempTabTransaction.getString("transaction_type"),
+                                                TabTransaction.getTransactionText(tempTabTransaction.getString("transaction_type")),
                                                 (float) tempTabTransaction.getDouble("amount"),
                                                 tempTabTransaction.getInt("tab_transaction_id")
                                         ));
@@ -240,7 +240,7 @@ public class TabApiManager extends ApiManager{
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        callback.onSuccessCallBack();
+//                        callback.onSuccessCallBack();
                     }
                 },
                 new Response.ErrorListener() {
@@ -260,7 +260,7 @@ public class TabApiManager extends ApiManager{
         _queue.add(createTabRequest);
     }
 
-    private String getImageSRC() {
+    private String getImageSRC(Boolean isOtherUser) {
         ArrayList<String> imgURLS = new ArrayList<>();
         imgURLS.add("https://c7.uihere.com/files/348/800/890/computer-icons-avatar-user-login-avatar.jpg");
         imgURLS.add("http://www.epsomps.vic.edu.au/wp-content/uploads/2016/09/512x512-1-300x300.png");
@@ -268,7 +268,7 @@ public class TabApiManager extends ApiManager{
         imgURLS.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTraWBXv4yZXxfZOS8llQbEllO9LIPga92NJHc4iUxRmYHh9NG-");
         imgURLS.add("http://shinobi-software.com/images/geek.png");
 
-        return imgURLS.get(2);
+        return isOtherUser ? imgURLS.get(1): imgURLS.get(3);
     }
 
 }

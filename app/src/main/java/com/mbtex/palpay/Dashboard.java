@@ -103,7 +103,7 @@ public class Dashboard extends AppCompatActivity {
 
 
         ItemTouchHelper.SimpleCallback tabTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            public static final float ALPHA_FULL = 1.0f;
+            public static final float ALPHA_FULL = 0.7f;
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
                 return false;

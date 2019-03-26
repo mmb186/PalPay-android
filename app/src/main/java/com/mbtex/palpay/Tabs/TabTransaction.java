@@ -4,16 +4,17 @@ public class TabTransaction {
     private String imageSource;
     private String username;
     private String status;
+    private String _user_transaction_status;
     private String date;
     private String type;
     private float amount;
     private int _id;
 
-    public static String TAB_APPROVED = "APPROVED";
-    public static String TAB_PENDING = "PENDING";
-    public static String TAB_INACTIVE = "INACTIVE";
+    public static String APPROVED = "APPROVED";
+    public static String PENDING = "PENDING";
+    public static String DECLINED = "DECLINED";
 
-    public TabTransaction(String imageSource, String username, String status, String date, String type, float amount, int _id) {
+    public TabTransaction(String imageSource, String username, String status, String userTransactionStatus,String date, String type, float amount, int _id) {
         this.imageSource = imageSource;
         this.username = username;
         this.status = status;
@@ -21,6 +22,7 @@ public class TabTransaction {
         this.type = type;
         this.amount = amount;
         this._id = _id;
+        this._user_transaction_status = userTransactionStatus;
     }
 
     public String getUsername() {
@@ -51,13 +53,34 @@ public class TabTransaction {
         return _id;
     }
 
+    public String getUserTransactionStatus() {
+        return this._user_transaction_status;
+    }
+
 
     public void setStatus(String status) {
 
         this.status = status;
     }
 
+    public static String getTransactionText(String type) {
+
+        switch (type) {
+            case "WITHDRAW":
+                return "B";
+            case "DEPOSIT":
+                return "P";
+            default:
+                return "?";
+        }
+    }
+
     public void setImageSource(String imageSource) {
         this.imageSource = imageSource;
+    }
+
+    public void updateTransactionStatus(String status) {
+        this._user_transaction_status = status;
+        this.status = status;
     }
 }

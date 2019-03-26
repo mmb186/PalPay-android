@@ -72,9 +72,19 @@ public class TabTransactionRecyclerViewAdapter extends RecyclerView.Adapter<TabT
         });
     }
 
+    public TabTransaction getTabTransaction(int position) {
+        return this._transaction_list.get(position);
+    }
+
     @Override
     public int getItemCount() {
         return _transaction_list.size();
+    }
+
+    public void removeTransaction(int position) {
+        _transaction_list.remove(position);
+        notifyItemChanged(position);
+        notifyItemRangeChanged(position, _transaction_list.size());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
