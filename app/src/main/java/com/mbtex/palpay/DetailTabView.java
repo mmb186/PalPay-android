@@ -25,6 +25,9 @@ import com.mbtex.palpay.Tabs.TabTransaction;
 import com.mbtex.palpay.Tabs.TabTransactionRecyclerViewAdapter;
 import com.mbtex.palpay.User.User;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class DetailTabView extends AppCompatActivity {
@@ -232,6 +235,17 @@ public class DetailTabView extends AppCompatActivity {
 
     private void updateAPIWithNewTransactionStatus(int id, String status) {
         Log.d(TAG, "updateAPIWithNewTransactionStatus: Updated Status" + status);
+        JSONObject tabTransactionStatusData = new JSONObject();
+
+        try {
+            tabTransactionStatusData.put("transaction_id", id);
+            tabTransactionStatusData.put("status", status);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        TabApiManager.getTabApiManager(getApplicationContext())
+                .updateTransactionStatus(tabTransactionStatusData, current_user, DetailTabView.this);
 
         // TODO: API CALL FOR STATUS CHANGE
     }
