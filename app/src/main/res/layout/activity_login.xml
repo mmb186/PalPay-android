@@ -73,6 +73,7 @@
                 android:text="@string/action_sign_in_short"
                 android:textColor="@color/colorBackground"
                 android:background="@color/colorPrimary"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <TextView

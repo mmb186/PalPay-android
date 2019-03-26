@@ -15,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
             android:orientation="vertical">
 
             <TextView
@@ -23,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:text="Tab Name"
-                android:textColor="#000"
+                android:textColor="@color/colorBackground"
                 android:textSize="17sp" />
 
             <TextView
@@ -34,7 +35,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="14dp"
                 android:text="PENDING"
-                android:textColor="#000"
+                android:textColor="@color/colorBackground"
                 android:textSize="12sp" />
 
         </LinearLayout>
