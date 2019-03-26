@@ -96,6 +96,8 @@
                 android:background="@color/colorPrimary"
                 android:textColor="@color/colorBackground"
                 android:text="Register"
+                android:textAllCaps="true"
+                android:textSize="17dp"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textStyle="bold" />
 
