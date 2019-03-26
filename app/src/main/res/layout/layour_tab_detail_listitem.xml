@@ -9,8 +9,8 @@
     >
     
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/user_transaction_image"
         android:src="@mipmap/ic_launcher"
         />
@@ -24,8 +24,8 @@
         android:layout_toRightOf="@+id/user_transaction_image"
         android:textColor="#000"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="15dp"
-        android:textSize="18sp"
+        android:layout_marginLeft="5dp"
+        android:textSize="15sp"
         />
     <TextView
         android:id="@+id/transaction_date"
@@ -36,8 +36,8 @@
         android:layout_below="@id/transaction_owner"
         android:textColor="#000"
         android:layout_marginTop="2.5dp"
-        android:layout_marginLeft="15dp"
-        android:textSize="13sp"
+        android:layout_marginLeft="5dp"
+        android:textSize="10sp"
         />
 
     <TextView
@@ -49,8 +49,8 @@
         android:layout_below="@id/transaction_date"
         android:textColor="#000"
         android:layout_marginTop="2.5dp"
-        android:layout_marginLeft="15dp"
-        android:textSize="15sp"
+        android:layout_marginLeft="5dp"
+        android:textSize="12sp"
         />
 
     <TextView
@@ -63,7 +63,7 @@
         android:textColor="#000"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="160dp"
-        android:textSize="15sp"
+        android:textSize="12sp"
         />
 
     <org.fabiomsr.moneytextview.MoneyTextView

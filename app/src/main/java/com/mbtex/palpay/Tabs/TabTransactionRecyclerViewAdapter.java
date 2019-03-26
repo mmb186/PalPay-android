@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mbtex.palpay.R;
+import com.mbtex.palpay.User.User;
 
 import org.fabiomsr.moneytextview.MoneyTextView;
 
@@ -25,10 +26,12 @@ public class TabTransactionRecyclerViewAdapter extends RecyclerView.Adapter<TabT
 
     private ArrayList<TabTransaction> _transaction_list = new ArrayList<>();
     private Context _ctx;
+    private User current_user;
 
-    public TabTransactionRecyclerViewAdapter(Context _ctx, ArrayList<TabTransaction> _transaction_list) {
+    public TabTransactionRecyclerViewAdapter(Context _ctx, ArrayList<TabTransaction> _transaction_list, User current_user) {
         this._transaction_list = _transaction_list;
         this._ctx = _ctx;
+        this.current_user = current_user;
     }
 
     @NonNull

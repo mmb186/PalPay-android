@@ -1,6 +1,6 @@
 package com.mbtex.palpay.Tabs;
 
-class TabTransaction {
+public class TabTransaction {
     private String imageSource;
     private String username;
     private String status;
