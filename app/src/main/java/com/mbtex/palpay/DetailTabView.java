@@ -125,7 +125,7 @@ public class DetailTabView extends AppCompatActivity {
                 float SWIPE_LEFT_TRANSLATION_CONSTANT = 50;
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                     Log.d(TAG, "onChildDraw: Action is swipe");
-//
+
                     View itemView = viewHolder.itemView;
 
                     Paint p = new Paint();
@@ -224,8 +224,6 @@ public class DetailTabView extends AppCompatActivity {
 
                     adapter.notifyItemChanged(position);
                 }
-
-
             }
         };
 

@@ -84,12 +84,14 @@ public class AuthorizationApiManager extends ApiManager {
             @Override
             public void onResponse(JSONObject response) {
                 String auth_token= "";
-                String username = "MoeB";
-                String email = "test@test.com";
+                String username = "";
+                String email = "";
                 Toast.makeText(_ctx, "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
 
                 try {
                     auth_token = (String) response.get("auth_token");
+                    username = (String) response.get("username");
+                    email = (String) response.get("email");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -119,14 +121,12 @@ public class AuthorizationApiManager extends ApiManager {
         };
 
         _queue.add(loginUserRequest);
-        // Demo Git
     }
-
     /*
      * Register User
      * Api Call to Register User in and instantiates the user object.
      * */
-    public void registerUser(JSONObject formData)
+    public void registerUser(JSONObject formData, final AppCompatActivity singUpActivity)
     {
         String register_user_route = _baseURL + "/create_user/";
         JsonObjectRequest registerUserRequest = new JsonObjectRequest(Request.Method.POST, register_user_route, formData,
@@ -134,9 +134,26 @@ public class AuthorizationApiManager extends ApiManager {
         new Response.Listener<JSONObject> () {
             @Override
             public void onResponse(JSONObject response) {
-                String res = "";
+                String auth_token= "";
+                String username = "";
+                String email = "";
                 Toast.makeText(_ctx, "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
-                // TODO: Change intent to new Dashboard Screen.
+
+                try {
+                    auth_token = (String) response.get("auth_token");
+                    username = (String) response.get("username");
+                    email = (String) response.get("email");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                User current_user = User.getUser(
+                        username, auth_token, email,"" );
+
+                Intent intent = new Intent(singUpActivity, Dashboard.class);
+                intent.putExtra("current_user", current_user);
+                singUpActivity.startActivity(intent);
+
             }
         },
         new Response.ErrorListener() {
