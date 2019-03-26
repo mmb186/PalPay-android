@@ -70,7 +70,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
+                android:text="@string/action_sign_in_short"
+                android:textColor="@color/colorBackground"
+                android:background="@color/colorPrimary"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -80,6 +83,7 @@
                 android:onClick="handleSignUpRedirectClick"
                 android:paddingTop="10dp"
                 android:text="Don't have an Account? SignUp"
+                android:textColor="@color/colorClickable"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
