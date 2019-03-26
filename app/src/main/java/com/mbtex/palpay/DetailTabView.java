@@ -99,14 +99,12 @@ public class DetailTabView extends AppCompatActivity {
                 }
                 try{
                     dubAmount = Double.parseDouble(amount);
-                    if(dubAmount >= 0.01){
+                    if (dubAmount >= 1.0) {
                         submit_transaction(dubAmount, type);
                         myDialog.dismiss();
                     }
                 }
-                catch(Exception e){}
-
-
+                catch (Exception e){}
             }
         });
         myDialog.show();
