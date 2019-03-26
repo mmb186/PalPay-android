@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="400dp"
+    android:background="@color/colorPrimary"
+    android:padding="5dp"
+    android:layout_gravity="center" >
+    <TextView
+        android:id="@+id/txtClose"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/colorBackground"
+        android:text="X"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:background="@drawable/circle_background"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/txtAmount"
+            android:hint="Enter Amount eg($30.84)"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:background="@color/colorBackground"
+            android:layout_height="40dp" />
+        <ToggleButton
+            android:id="@+id/btnPayLoanm"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:textOff="Loan"
+            android:textOn="Pay"
+            android:textColor="@color/colorClickable"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:background="@color/colorBackground"/>
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:text="CONFIRM"
+            android:textAllCaps="true"
+            android:textColor="@color/colorClickable"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:background="@color/colorBackground" />
+    </LinearLayout>
+
+</LinearLayout>

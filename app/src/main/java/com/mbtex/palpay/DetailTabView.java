@@ -6,6 +6,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ToggleButton;
 
 import com.mbtex.palpay.User.User;
 
@@ -37,4 +40,42 @@ public class DetailTabView extends AppCompatActivity {
 
     }
 
+    public void newTransactionPopup(View v) {
+        TextView txtClose;
+        ToggleButton btnToggle;
+        EditText editAmount;
+        Button btnConfirm;
+        boolean pay = true;
+        myDialog.setContentView(R.layout.create_transaction_popup);
+        txtClose = (TextView) myDialog.findViewByID(R.id.txtClose);
+        btnToggle = (ToggleButton) myDialog.findViewByID(R.id.btnPayLoan);
+        editAmount = (EditText) myDialog.findViewByID(R.id.txtAmount);
+        txtClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        btnToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    isChecked = false;
+                    pay = false;
+                }
+                else{
+                    isChecked = true;
+                    pay = true;
+                }
+            }
+        });
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                if(submit_transaction()) {
+                    myDialog.dismiss();
+                }
+            }
+        }
+    }
 }
