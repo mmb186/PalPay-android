@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:text="Tab Name"
-                android:textColor="#000"
+                android:textColor="@color/colorPrimary"
                 android:textSize="17sp" />
 
             <TextView
@@ -34,7 +34,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="14dp"
                 android:text="PENDING"
-                android:textColor="#000"
+                android:textColor="@color/colorPrimary"
                 android:textSize="12sp" />
 
         </LinearLayout>

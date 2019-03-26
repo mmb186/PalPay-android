@@ -57,6 +57,9 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorBackground"
+                android:textSize="17dp"
                 android:id="@+id/create_tab_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
