@@ -66,7 +66,7 @@ public class TabTransactionRecyclerViewAdapter extends RecyclerView.Adapter<TabT
 
                 Toast.makeText(
                         _ctx,
-                        _transaction_list.get(position).getUsername() + " " + Integer.toString(_transaction_list.get(position).get_id()),
+                        _transaction_list.get(position).getUsername() + " " + Integer.toString(_transaction_list.get(position).getTransactionId()),
                         Toast.LENGTH_SHORT).show();
             }
         });

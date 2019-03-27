@@ -8,20 +8,22 @@ public class TabTransaction {
     private String date;
     private String type;
     private float amount;
-    private int _id;
+    private int _user_transaction_id;
+    private int _transaction_id;
 
     public static String APPROVED = "APPROVED";
     public static String PENDING = "PENDING";
     public static String DECLINED = "DECLINED";
 
-    public TabTransaction(String imageSource, String username, String status, String userTransactionStatus,String date, String type, float amount, int _id) {
+    public TabTransaction(String imageSource, String username, String status, String userTransactionStatus,String date, String type, float amount, int transaction_id, int user_transaction_id) {
         this.imageSource = imageSource;
         this.username = username;
         this.status = status;
         this.date = date;
         this.type = type;
         this.amount = amount;
-        this._id = _id;
+        this._transaction_id = transaction_id;
+        this._user_transaction_id = user_transaction_id;
         this._user_transaction_status = userTransactionStatus;
     }
 
@@ -49,17 +51,17 @@ public class TabTransaction {
         return amount;
     }
 
-    public int get_id() {
-        return _id;
+    public int getUserTransactionId() {
+        return _user_transaction_id;
     }
+
+    public int getTransactionId() {return this._transaction_id;}
 
     public String getUserTransactionStatus() {
         return this._user_transaction_status;
     }
 
-
     public void setStatus(String status) {
-
         this.status = status;
     }
 

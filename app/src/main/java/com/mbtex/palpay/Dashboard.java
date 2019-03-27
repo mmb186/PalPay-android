@@ -113,15 +113,13 @@ public class Dashboard extends AppCompatActivity {
                 return Math.round(dp * (getResources().getDisplayMetrics().xdpi / DisplayMetrics.DENSITY_DEFAULT));
             }
 
-
-//            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 Log.d(TAG, "onChildDraw: ");
                 float SWIPE_RIGHT_TRANSLATION_CONSTANT = 125;
                 float SWIPE_LEFT_TRANSLATION_CONSTANT = 50;
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                     Log.d(TAG, "onChildDraw: Action is swipe");
-//
+
                     View itemView = viewHolder.itemView;
 
                     Paint p = new Paint();
@@ -217,11 +215,8 @@ public class Dashboard extends AppCompatActivity {
                         Toast.makeText(Dashboard.this, "Cannot Delete Active Tab.", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(Dashboard.this, "Tab is Already Active.", Toast.LENGTH_SHORT).show();
-
                     adapter.notifyItemChanged(position);
                 }
-
-
             }
         };
 
