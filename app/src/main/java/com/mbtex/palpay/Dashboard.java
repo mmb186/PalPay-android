@@ -72,14 +72,25 @@ public class Dashboard extends AppCompatActivity {
 
         current_user = getIntent().getExtras().getParcelable("current_user");
 
-        registerClickListeners();
+//        registerClickListeners();
         Log.d(TAG, "onCreate: Registered Click Listeners");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+//        addTabsToTabList();
+//        registerClickListeners();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        setContentView(R.layout.activity_dashboard);
+
         addTabsToTabList();
+        registerClickListeners();
     }
 
     private void addTabsToTabList() {
@@ -206,7 +217,6 @@ public class Dashboard extends AppCompatActivity {
                         tab_swiped.updateStatus(new_tab_status);
 
                         adapter.notifyItemChanged(position);
-
                     }
                     updateAPIWithNewStatus(tab_swiped.getId(), tab_swiped.getUserTabStatus());
 
@@ -221,6 +231,7 @@ public class Dashboard extends AppCompatActivity {
         };
 
         ItemTouchHelper tabTouchHelper = new ItemTouchHelper(tabTouchCallback);
+        tabTouchHelper.attachToRecyclerView(null);
         tabTouchHelper.attachToRecyclerView(recyclerView);
     }
 

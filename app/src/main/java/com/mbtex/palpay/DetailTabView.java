@@ -76,8 +76,15 @@ public class DetailTabView extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        setContentView(R.layout.activity_detail_tab_view);
         addTabTransactionsToTransactionList();
     }
+
 
     private void addTabTransactionsToTransactionList() {
         Log.d(TAG, "addTabTransactionsToTransactionList: Getting TabAPIManager");
@@ -95,25 +102,21 @@ public class DetailTabView extends AppCompatActivity {
     private void initTransactionList() {
         Log.d(TAG, "initTransactionList: ");
         initRecyclerView();
-
-
     }
 
+
     private void initRecyclerView() {
-        Log.d(TAG, "initRecyclerView: init recyclerview.");
+        Log.d(TAG, "initRecyclerView: init RecyclerView.");
         RecyclerView recyclerView = findViewById(R.id.detail_tab_recycler_view);
-        TabTransactionRecyclerViewAdapter adapter = new TabTransactionRecyclerViewAdapter(
+        final TabTransactionRecyclerViewAdapter adapter = new TabTransactionRecyclerViewAdapter(
                 getApplication(),
                 tab_transactions,
                 current_user);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        initiateSwipeFunctionality(adapter, recyclerView);
 
-        initiateSwipeFunctionality(adapter, recyclerView);
-    }
-
-    private void initiateSwipeFunctionality(final TabTransactionRecyclerViewAdapter adapter, final RecyclerView recyclerView) {
-        ItemTouchHelper.SimpleCallback tabTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        ItemTouchHelper.SimpleCallback tabTransactionTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             private static final float ALPHA_FULL = 1.0f;
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
@@ -216,9 +219,7 @@ public class DetailTabView extends AppCompatActivity {
                         Log.d(TAG, "onSwiped: Swiped Right");
                         Toast.makeText(DetailTabView.this, "SWIPED RIGHT", Toast.LENGTH_SHORT).show();
                         transaction_swiped.updateTransactionStatus(new_transaction_status);
-
                         adapter.notifyItemChanged(position);
-
                     }
                     updateAPIWithNewTransactionStatus(transaction_swiped.getTransactionId(), transaction_swiped.getUserTransactionStatus());
 
@@ -227,14 +228,138 @@ public class DetailTabView extends AppCompatActivity {
                         Toast.makeText(DetailTabView.this, "Cannot Decline an approved transaction.", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(DetailTabView.this, "You've already Approved this Transaction.", Toast.LENGTH_SHORT).show();
-
                     adapter.notifyItemChanged(position);
                 }
             }
         };
 
-        ItemTouchHelper tabTouchHelper = new ItemTouchHelper(tabTouchCallback);
+        ItemTouchHelper tabTouchHelper = new ItemTouchHelper(tabTransactionTouchCallback);
+        tabTouchHelper.attachToRecyclerView(null);
         tabTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void initiateSwipeFunctionality(final TabTransactionRecyclerViewAdapter adapter, final RecyclerView recyclerView) {
+//        ItemTouchHelper.SimpleCallback tabTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//            private static final float ALPHA_FULL = 1.0f;
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+//                return false;
+//            }
+//
+//            private int convertDpToPx(int dp) {
+//                return Math.round(dp * (getResources().getDisplayMetrics().xdpi / DisplayMetrics.DENSITY_DEFAULT));
+//            }
+//
+//
+//            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+//                Log.d(TAG, "onChildDraw: ");
+//                float SWIPE_RIGHT_TRANSLATION_CONSTANT = 125;
+//                float SWIPE_LEFT_TRANSLATION_CONSTANT = 50;
+//                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+//                    Log.d(TAG, "onChildDraw: Action is swipe");
+//
+//                    View itemView = viewHolder.itemView;
+//
+//                    Paint p = new Paint();
+//                    Bitmap icon;
+//
+//
+//                    if (dX  > 0) {
+//                        /* swiping right () */
+//                        Log.d(TAG, "onChildDraw: Swipe Right. Accept");
+//                        p.setARGB(255, 0, 255, 0);
+//
+//
+//                        // Draw Rectangle
+//                        c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX, (float) itemView.getBottom(), p);
+//
+//                        // Draw Icon;
+//                        icon = GeneralHelpers.getBitmapFromDrawable(getApplicationContext(), R.drawable.ic_check_white_24dp);
+//                        c.drawBitmap(
+//                                icon,
+//                                (float) itemView.getLeft() + convertDpToPx(16) - icon.getWidth() + SWIPE_RIGHT_TRANSLATION_CONSTANT,
+//                                (float) itemView.getTop() + ((float) itemView.getBottom() - (float) itemView.getTop() - icon.getHeight()) /2,
+//                                p
+//                        );
+//                    } else {
+//                        /* Swiping Left (Declining) */
+//                        Log.d(TAG, "onChildDraw: Swipe Left. Decline");
+//
+//                        // Draw Rectangle
+//                        p.setARGB(255,255, 0, 0);
+//                        c.drawRect(
+//                                (float) itemView.getRight() + dX, (float) itemView.getTop(),
+//                                (float) itemView.getRight(),
+//                                (float) itemView.getBottom(),
+//                                p
+//                        );
+//
+//                        // Draw Icon
+//                        icon = GeneralHelpers.getBitmapFromDrawable(getApplicationContext(), R.drawable.ic_close_white_24dp);
+//                        float top_pt = (float) itemView.getRight() + convertDpToPx(16) - icon.getWidth() - SWIPE_LEFT_TRANSLATION_CONSTANT;
+//                        float left_pt = ((float) itemView.getTop() + ( ((float) itemView.getBottom() - (float) itemView.getTop() - icon.getHeight())/2));
+//                        c.drawBitmap(
+//                                icon,
+//                                top_pt,
+//                                left_pt,
+//                                p
+//                        );
+//                    }
+//
+//                    // Fade out view after item is swiped out of parent
+//                    final float alpha = ALPHA_FULL - Math.abs(dX);
+//                    viewHolder.itemView.setAlpha(alpha);
+//                    viewHolder.itemView.setTranslationX(dX);
+//                } else {
+//                    Log.d(TAG, "onChildDraw: Action is not swipe");
+//                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+//                }
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int swipeDirection) {
+//                int position = viewHolder.getAdapterPosition();
+//                TabTransaction transaction_swiped = adapter.getTabTransaction(position);
+//                String new_transaction_status = "";
+//
+//                if (transaction_swiped.getUserTransactionStatus().equals(TabTransaction.PENDING))
+//                {
+//                    Log.d(TAG, "onSwiped: Updated Tab " + transaction_swiped.getTransactionId() + " status");
+//
+//                    if (swipeDirection == ItemTouchHelper.LEFT)
+//                    {
+//                        // Declining Tab
+//                        new_transaction_status = TabTransaction.DECLINED;
+//                        Log.d(TAG, "onSwiped: SWIPED LEFT");
+//                        adapter.removeTransaction(position);
+//                        adapter.notifyItemRemoved(position);
+//                        Toast.makeText(DetailTabView.this, "SWIPED LEFT", Toast.LENGTH_SHORT).show();
+//                    }
+//                    else
+//                    {
+//                        // approving Tab
+//                        new_transaction_status = TabTransaction.APPROVED;
+//                        Log.d(TAG, "onSwiped: Swiped Right");
+//                        Toast.makeText(DetailTabView.this, "SWIPED RIGHT", Toast.LENGTH_SHORT).show();
+//                        transaction_swiped.updateTransactionStatus(new_transaction_status);
+//
+//                        adapter.notifyItemChanged(position);
+//
+//                    }
+//                    updateAPIWithNewTransactionStatus(transaction_swiped.getTransactionId(), transaction_swiped.getUserTransactionStatus());
+//
+//                } else {
+//                    if (swipeDirection == ItemTouchHelper.LEFT)
+//                        Toast.makeText(DetailTabView.this, "Cannot Decline an approved transaction.", Toast.LENGTH_SHORT).show();
+//                    else
+//                        Toast.makeText(DetailTabView.this, "You've already Approved this Transaction.", Toast.LENGTH_SHORT).show();
+//                    adapter.notifyItemChanged(position);
+//                }
+//            }
+//        };
+//
+//        ItemTouchHelper tabTouchHelper = new ItemTouchHelper(tabTouchCallback);
+//        tabTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     private void updateAPIWithNewTransactionStatus(int id, String status) {

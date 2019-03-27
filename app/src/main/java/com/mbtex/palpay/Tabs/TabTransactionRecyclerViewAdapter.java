@@ -83,7 +83,7 @@ public class TabTransactionRecyclerViewAdapter extends RecyclerView.Adapter<TabT
 
     public void removeTransaction(int position) {
         _transaction_list.remove(position);
-        notifyItemChanged(position);
+        notifyItemRemoved(position);
         notifyItemRangeChanged(position, _transaction_list.size());
     }
 

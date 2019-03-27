@@ -3,6 +3,7 @@ package com.mbtex.palpay.ApiManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.LruCache;
 import android.widget.Toast;
 
@@ -28,12 +29,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TabApiManager extends ApiManager{
+    private static final String TAG = "TabApiManager";
     private static TabApiManager _tabApiManager;
     private RequestQueue _queue;
     private ImageLoader _imageLoader;
     private static Context _ctx;
 
     private TabApiManager(Context context) {
+        
         _ctx = context;
         _queue = getRequestQueue();
 
@@ -270,7 +273,8 @@ public class TabApiManager extends ApiManager{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println("SUCCESS");
+                        Log.d(TAG, "onResponse: Updated Transaction status Success");
+                        Toast.makeText(callingActivity, "Transaction Status updated!", Toast.LENGTH_SHORT).show();
 
                     }
                 },
