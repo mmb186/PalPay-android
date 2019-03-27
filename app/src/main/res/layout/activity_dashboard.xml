@@ -17,17 +17,44 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        <TextView
-            android:id="@+id/total_balance"
+        
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textColor="@color/colorBackground"
-            android:paddingTop="0dp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            android:text="Total Balance: +$20.50" />
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/total_balance"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textColor="@color/colorBackground"
+                android:paddingTop="0dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textSize="25dp"
+                android:text="Total Balance"
+                android:textAllCaps="true"/>
+
+            <org.fabiomsr.moneytextview.MoneyTextView
+                android:id="@+id/tab_view_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:paddingTop="7dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                app:baseTextColor="@color/colorBackground"
+                app:amount="32.56"
+                app:baseTextSize="20sp"
+                app:decimalDigitsTextSize="17sp"
+                app:decimalMargin="6dp"
+                app:includeDecimalSeparator="false"
+                app:symbol="$"
+                app:symbolGravity="start|top"
+                app:symbolMargin="6dp"
+                app:symbolTextSize="14sp" />
+        </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
 
