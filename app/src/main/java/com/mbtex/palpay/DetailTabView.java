@@ -36,5 +36,5 @@ public class DetailTabView extends AppCompatActivity {
         int tab_id = getIntent().getExtras().getInt("tab_id");
 
     }
-// init
+
 }
