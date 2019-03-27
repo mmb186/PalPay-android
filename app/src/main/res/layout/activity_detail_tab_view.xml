@@ -6,49 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".DetailTabView">
 
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+<!---->
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="?attr/colorPrimary"-->
+            <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
+<!---->
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_detail_tab_view" />
-    
     <LinearLayout
+        android:id="@+id/detail_tab_summary_view"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal"
         android:background="@color/colorPrimary">
 
         <TextView
-            android:layout_width="300dp"
+            android:id="@+id/detail_tab_name"
+            android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:textColor="@color/colorBackground"
             android:textStyle="bold"
-            android:textSize="22dp"
+            android:textSize="22sp"
             android:textAllCaps="true"
-            android:paddingTop="7dp"
-            android:text="TAB NAME"
-            android:layout_marginLeft="20dp"
+            android:text="@string/detail_tab_name"
+            android:layout_marginStart="20dp"
             android:gravity="center|left"
             />
 
         <org.fabiomsr.moneytextview.MoneyTextView
             android:id="@+id/tab_view_balance"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:paddingTop="7dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center|right"
             app:baseTextColor="@color/colorBackground"
             app:amount="32.56"
             app:baseTextSize="20sp"
@@ -58,8 +61,13 @@
             app:symbol="$"
             app:symbolGravity="start|top"
             app:symbolMargin="6dp"
-            app:symbolTextSize="14sp" />
+            app:symbolTextSize="14sp"/>
     </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <include layout="@layout/content_detail_tab_view" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_new_transaction"

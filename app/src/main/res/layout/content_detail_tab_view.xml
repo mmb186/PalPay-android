@@ -8,7 +8,6 @@
     tools:context=".DetailTabView"
     tools:showIn="@layout/activity_detail_tab_view">
 
-    <!--TODO: add Summary table Here-->
 
 
 

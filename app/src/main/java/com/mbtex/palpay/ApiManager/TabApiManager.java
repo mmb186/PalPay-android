@@ -16,6 +16,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.mbtex.palpay.Dashboard;
+import com.mbtex.palpay.Helper.LocalActivityState;
 import com.mbtex.palpay.Tabs.Tab;
 import com.mbtex.palpay.Tabs.TabTransaction;
 import com.mbtex.palpay.User.User;
@@ -120,7 +121,8 @@ public class TabApiManager extends ApiManager{
             final User current_user,
             final Dashboard actingActivity,
             final ArrayList<Tab> tab,
-            final VolleyCallBack callback
+            final VolleyCallBack callback,
+            final LocalActivityState localState
     )
     {
         String get_user_tab_route = _baseURL + "/get_all_user_tabs/" ;
@@ -136,6 +138,7 @@ public class TabApiManager extends ApiManager{
                         try {
 
                             JSONArray temp_tabs = response.getJSONObject("data").getJSONArray("tabs");
+                            localState.updateState((float)response.getJSONObject("data").getDouble("balance"));
                             tab.clear();
                             for (int i  = 0; i < response.getJSONObject("data").getJSONArray("tabs").length(); i++)
                             {
@@ -210,7 +213,8 @@ public class TabApiManager extends ApiManager{
             final User current_user,
             int tabId,
             final ArrayList<TabTransaction> tab_transactions,
-            final VolleyCallBack callback
+            final VolleyCallBack callback,
+            final LocalActivityState localActivityState
     )
     {
         String get_user_tab_route = _baseURL + "/get_tab_details/" + Integer.toString(tabId) + "/";
@@ -225,6 +229,8 @@ public class TabApiManager extends ApiManager{
                         try {
 
                             JSONArray tabTransactions = response.getJSONObject("data").getJSONArray("transactions");
+                            localActivityState.updateState(response.getJSONObject("data").getString("tab_name"),
+                                    (float) response.getJSONObject("data").getDouble("balance"));
                             tab_transactions.clear();
                             for (int i  = 0; i < tabTransactions.length(); i++)
                             {

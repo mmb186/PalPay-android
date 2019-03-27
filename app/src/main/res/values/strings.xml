@@ -35,4 +35,9 @@
     <string name="error_cannot_add_yourself_to_tab">Cannot add yourself to the tab</string>
     <string name="title_activity_detail_tab_view">DetailTabView</string>
 
+
+    <!--Detailed Tab View-->
+    <string name="detail_tab_name">Tab Name</string>
+    <!--<string name="detail_tab_name">Tab Name</string>-->
+
 </resources>

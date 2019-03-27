@@ -24,17 +24,45 @@ import android.widget.ToggleButton;
 
 import com.mbtex.palpay.ApiManager.TabApiManager;
 import com.mbtex.palpay.ApiManager.VolleyCallBack;
+import com.mbtex.palpay.Helper.LocalActivityState;
 import com.mbtex.palpay.Helper.GeneralHelpers;
 import com.mbtex.palpay.Tabs.TabTransaction;
 import com.mbtex.palpay.Tabs.TabTransactionRecyclerViewAdapter;
 import com.mbtex.palpay.User.User;
 
+import org.fabiomsr.moneytextview.MoneyTextView;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class DetailTabView extends AppCompatActivity {
+
+    class  DetailTabViewState extends LocalActivityState {
+        private String tabName;
+        private float tabBalance;
+
+        public DetailTabViewState(String tabName, float tabBalance) {
+            super();
+            this.tabName = tabName;
+            this.tabBalance = tabBalance;
+        }
+
+        @Override
+        public void updateState(Object... arguments) {
+            this.tabName = (String) arguments[0];
+            this.tabBalance = (float) arguments[1];
+        }
+
+        public String getTabName() {
+            return tabName;
+        }
+
+        public float getTabBalance() {
+            return tabBalance;
+        }
+    }
 
     private static final String TAG = "DetailTabView";
     User current_user;
@@ -43,6 +71,7 @@ public class DetailTabView extends AppCompatActivity {
     private ArrayList<String> imgURLS = new ArrayList<>();
     int _tabId;
     FloatingActionButton fab;
+    DetailTabViewState localTabState;
 
     private void registerClickListeners() {
         Log.d(TAG, "registerClickListeners: Register click listeners");
@@ -62,11 +91,13 @@ public class DetailTabView extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_tab_view);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         current_user = getIntent().getExtras().getParcelable("current_user");
         this._tabId = getIntent().getExtras().getInt("tab_id");
+
+        localTabState = new DetailTabViewState("", 0.0f);
 
     }
 
@@ -86,7 +117,6 @@ public class DetailTabView extends AppCompatActivity {
         super.onPostResume();
     }
 
-
     private void addTabTransactionsToTransactionList() {
         Log.d(TAG, "addTabTransactionsToTransactionList: Getting TabAPIManager");
 
@@ -95,7 +125,8 @@ public class DetailTabView extends AppCompatActivity {
                         current_user,
                         this._tabId,
                         tab_transactions,
-                        new InitiateRecyclerViewCommand()
+                        new InitiateRecyclerViewCommand(),
+                        localTabState
                 );
     }
 
@@ -234,6 +265,8 @@ public class DetailTabView extends AppCompatActivity {
         ItemTouchHelper tabTouchHelper = new ItemTouchHelper(tabTransactionTouchCallback);
         tabTouchHelper.attachToRecyclerView(null);
         tabTouchHelper.attachToRecyclerView(recyclerView);
+
+        updateTabInfo();
     }
 
     private void updateAPIWithNewTransactionStatus(int id, String status) {
@@ -332,8 +365,17 @@ public class DetailTabView extends AppCompatActivity {
     class InitiateRecyclerViewCommand implements VolleyCallBack {
         @Override
         public void onSuccessCallBack(String... args) {
+//            updateTabInfo();
             initRecyclerView();
         }
+    }
+
+    private void updateTabInfo() {
+        TextView tabName = (TextView) findViewById(R.id.detail_tab_name);
+        MoneyTextView tabBalance = (MoneyTextView) findViewById(R.id.tab_view_balance);
+
+        tabName.setText(localTabState.getTabName());
+        tabBalance.setAmount(localTabState.getTabBalance());
     }
 
 
