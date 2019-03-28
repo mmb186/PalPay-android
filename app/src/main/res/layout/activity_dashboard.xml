@@ -49,7 +49,7 @@
                 app:symbol="$"
                 app:symbolGravity="start|top"
                 app:symbolMargin="6dp"
-                app:symbolTextSize="17sp" />
+                app:symbolTextSize="20sp" />
         </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>

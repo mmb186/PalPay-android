@@ -267,9 +267,19 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void updateGlobalTabBalance() {
-        MoneyTextView globalBalance =  findViewById(R.id.tab_view_balance);
-
+        MoneyTextView globalBalance = (MoneyTextView)  findViewById(R.id.tab_view_balance);
         globalBalance.setAmount(localState.getTabBalance());
+
+
+//        if ((int) localState.getTabBalance() > 0.0f) {
+//            globalBalance.setBaseColor(R.color.positiveBalance);
+//            globalBalance.setDecimalsColor(R.color.positiveBalance);
+//            globalBalance.setSymbolColor(R.color.positiveBalance);
+//        } else if (localState.getTabBalance() < 0.0f ) {
+//            globalBalance.setBaseColor(R.color.negativeBalance);
+//            globalBalance.setDecimalsColor(R.color.negativeBalance);
+//            globalBalance.setSymbolColor(R.color.negativeBalance);
+//        }
     }
 
 
