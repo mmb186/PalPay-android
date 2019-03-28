@@ -6,17 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard">
 
+
+
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <!--<android.support.v7.widget.Toolbar-->
-            <!--android:id="@+id/dashboard_toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="?attr/actionBarSize"-->
-            <!--android:background="?attr/colorPrimary"-->
-            <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
         <!---->
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,12 +21,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/total_balance"
+                android:id="@+id/dashboard_active_user"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:textColor="@color/colorBackground"
                 android:paddingTop="0dp"
-                android:textStyle="bold"
                 android:textAlignment="center"
                 android:textSize="25dp"
                 android:text="Balance Summary"/>
@@ -43,18 +39,18 @@
                 app:baseTextColor="@color/colorBackground"
                 app:amount="32.56"
                 app:baseTextSize="20sp"
-                app:decimalDigitsTextSize="17sp"
+                app:decimalDigitsTextSize="15sp"
                 app:decimalMargin="6dp"
                 app:includeDecimalSeparator="false"
                 app:symbol="$"
-                app:symbolGravity="start|top"
                 app:symbolMargin="6dp"
-                app:symbolTextSize="17sp" />
+                app:symbolTextSize="20sp" />
         </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_dashboard" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -62,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:src="@drawable/ic_add_white_24dp"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

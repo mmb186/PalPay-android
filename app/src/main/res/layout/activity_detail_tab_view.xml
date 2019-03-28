@@ -29,33 +29,32 @@
     <LinearLayout
         android:id="@+id/detail_tab_summary_view"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/detail_tab_name"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="@color/colorBackground"
             android:textStyle="bold"
             android:textSize="22sp"
             android:textAllCaps="true"
+            android:textAlignment="center"
             android:text="@string/detail_tab_name"
-            android:layout_marginStart="20dp"
-            android:gravity="center|left"
+            android:gravity="center"
             />
 
         <org.fabiomsr.moneytextview.MoneyTextView
             android:id="@+id/tab_view_balance"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:gravity="center|right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
             app:baseTextColor="@color/colorBackground"
             app:amount="32.56"
             app:baseTextSize="20sp"
-            app:decimalDigitsTextSize="17sp"
+            app:decimalDigitsTextSize="15sp"
             app:decimalMargin="6dp"
             app:includeDecimalSeparator="false"
             app:symbol="$"
@@ -69,12 +68,15 @@
 
     <include layout="@layout/content_detail_tab_view" />
 
+
+
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_new_transaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:src="@drawable/ic_add_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -64,6 +64,17 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
         viewHolder.tab_status.setText(tabs_list.get(position).getStatus());
         viewHolder.tab_balance.setAmount(tabs_list.get(position).getBalance());
 
+//        if ( tabs_list.get(position).getBalance() > 0.0f) {
+//            viewHolder.tab_balance.setBaseColor(R.color.positiveBalance);
+//            viewHolder.tab_balance.setDecimalsColor(R.color.positiveBalance);
+//            viewHolder.tab_balance.setSymbolColor(R.color.positiveBalance);
+//        } else if ( tabs_list.get(position).getBalance() < 0.0f) {
+//            viewHolder.tab_balance.setBaseColor(R.color.negativeBalance);
+//            viewHolder.tab_balance.setDecimalsColor(R.color.negativeBalance);
+//            viewHolder.tab_balance.setSymbolColor(R.color.negativeBalance);
+//        }
+
+
         viewHolder.tab_parent_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
