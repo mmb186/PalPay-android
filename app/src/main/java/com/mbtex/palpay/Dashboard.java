@@ -286,7 +286,6 @@ public class Dashboard extends AppCompatActivity {
 //        }
     }
 
-
     void updateAPIWithNewStatus(int tab_id, String newStatus) {
         JSONObject tabData = new JSONObject();
 
