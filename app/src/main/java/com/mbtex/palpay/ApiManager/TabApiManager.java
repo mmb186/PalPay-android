@@ -83,8 +83,10 @@ public class TabApiManager extends ApiManager{
     /*
      * Api create a new Tab.
      * */
-    public void create_new_tab(JSONObject tabData, final User current_user, final AppCompatActivity callingActivity) {
-        String create_tab_route = _baseURL + "/create_new_tab/";
+    public void create_new_tab(JSONObject tabData, final User current_user, final AppCompatActivity callingActivity, final  Boolean isGroupTab) {
+//    public void create_new_tab(Boolean isGroupTab) {
+        String endpoint = isGroupTab ? "/create_new_group_tab/" : "/create_new_tab/";
+        String create_tab_route = _baseURL + endpoint;
 
         JsonObjectRequest createTabRequest = new JsonObjectRequest(Request.Method.POST, create_tab_route, tabData,
                 new Response.Listener<JSONObject> () {
@@ -103,7 +105,7 @@ public class TabApiManager extends ApiManager{
                         } else if (e.equals("Can't add yourself")) {
                             // can't add yourself
                         } else
-                            Toast.makeText(_ctx, "Response: " + e, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(_ctx, "Hmm... wrong username?" + e, Toast.LENGTH_SHORT).show();
                     }
                 })
         {

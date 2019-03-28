@@ -45,6 +45,7 @@
 
                 <EditText
                     android:id="@+id/tab_other_user"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeActionId="6"
