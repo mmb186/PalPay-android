@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +40,18 @@ import java.util.ArrayList;
 
 public class DetailTabView extends AppCompatActivity {
 
+
+
+    private static final String TAG = "DetailTabView";
+    User current_user;
+    Dialog myDialog;
+    private ArrayList<TabTransaction> tab_transactions = new ArrayList<>();
+    private ArrayList<String> imgURLS = new ArrayList<>();
+    int _tabId;
+    FloatingActionButton fab;
+    DetailTabViewState localTabState;
+    SwipeRefreshLayout refereshLayout;
+
     class  DetailTabViewState extends LocalActivityState {
         private String tabName;
         private float tabBalance;
@@ -64,15 +77,6 @@ public class DetailTabView extends AppCompatActivity {
         }
     }
 
-    private static final String TAG = "DetailTabView";
-    User current_user;
-    Dialog myDialog;
-    private ArrayList<TabTransaction> tab_transactions = new ArrayList<>();
-    private ArrayList<String> imgURLS = new ArrayList<>();
-    int _tabId;
-    FloatingActionButton fab;
-    DetailTabViewState localTabState;
-
     private void registerClickListeners() {
         Log.d(TAG, "registerClickListeners: Register click listeners");
         final DetailTabView localContext = this;
@@ -83,6 +87,16 @@ public class DetailTabView extends AppCompatActivity {
                 show_transaction_popup(view);
             }
         });
+
+        refereshLayout = findViewById(R.id.detail_tab_list_wipe_container);
+        refereshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onPostResume();
+            }
+        });
+
+
     }
 
     @Override
@@ -91,8 +105,7 @@ public class DetailTabView extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_tab_view);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+
 
         current_user = getIntent().getExtras().getParcelable("current_user");
         this._tabId = getIntent().getExtras().getInt("tab_id");
