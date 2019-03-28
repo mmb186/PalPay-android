@@ -115,7 +115,6 @@ public class AuthorizationApiManager extends ApiManager {
         {
             public Map<String, String> getHeaders() throws AuthFailureError {
             final Map<String, String> headers = new HashMap<>();
-//                headers.put("Authorization", "" + ""); //put your token here
             return headers;
         }
         };
