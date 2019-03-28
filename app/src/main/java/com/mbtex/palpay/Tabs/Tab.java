@@ -39,6 +39,6 @@ public class Tab {
 
     public void updateStatus(String new_tab_status) {
         this.user_tab_status = new_tab_status;
-        this.tab_status = new_tab_status;
+        this.tab_status = "ACTIVE";
     }
 }

@@ -1,29 +1,20 @@
 package com.mbtex.palpay;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mbtex.palpay.ApiManager.TabApiManager;
@@ -46,6 +37,7 @@ public class Dashboard extends AppCompatActivity {
     private ArrayList<Tab> my_tabs = new ArrayList<>();
     private User current_user;
     private DashboardState localState;
+    private SwipeRefreshLayout refereshLayout;
 
     private double _balance;
 
@@ -74,7 +66,7 @@ public class Dashboard extends AppCompatActivity {
     }
 
 
-    private void registerClickListeners() {
+    private void registerUserEventListeners() {
         final Dashboard localContext = this;
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -83,11 +75,16 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(current_user.createIntentAndAddSelf(localContext, CreateTab.class));
             }
         });
+
+        refereshLayout = findViewById(R.id.tab_list_wipe_container);
+        refereshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onPostResume();
+            }
+        });
     }
 
-    public void handleNewTabClick(View view) {
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +109,7 @@ public class Dashboard extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         addTabsToTabList();
-        registerClickListeners();
+        registerUserEventListeners();
     }
 
     private void addTabsToTabList() {
@@ -229,14 +226,14 @@ public class Dashboard extends AppCompatActivity {
                         Log.d(TAG, "onSwiped: SWIPED LEFT");
                         adapter.removeTab(position);
                         adapter.notifyItemRemoved(position);
-                        Toast.makeText(Dashboard.this, "SWIPED LEFT", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Dashboard.this, tab_swiped.getName() + "has be Declined", Toast.LENGTH_SHORT).show();
                     }
                     else
                         {
                     // approving Tab
                         new_tab_status = Tab.TAB_APPROVED;
                         Log.d(TAG, "onSwiped: Swiped Right");
-                        Toast.makeText(Dashboard.this, "SWIPED RIGHT", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Dashboard.this, tab_swiped.getName() + "has be Approved", Toast.LENGTH_SHORT).show();
                         tab_swiped.updateStatus(new_tab_status);
 
                         adapter.notifyItemChanged(position);
@@ -267,11 +264,22 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void updateGlobalTabBalance() {
-        MoneyTextView globalBalance =  findViewById(R.id.tab_view_balance);
+        MoneyTextView globalBalance = (MoneyTextView) findViewById(R.id.tab_view_balance);
+        TextView activeUser = (TextView) findViewById(R.id.dashboard_active_user);
+        globalBalance.setAmount(this.localState.getTabBalance());
+        activeUser.setText(this.current_user.getUserName());
 
-        globalBalance.setAmount(localState.getTabBalance());
+
+//        if ((int) localState.getTabBalance() > 0.0f) {
+//            globalBalance.setBaseColor(R.color.positiveBalance);
+//            globalBalance.setDecimalsColor(R.color.positiveBalance);
+//            globalBalance.setSymbolColor(R.color.positiveBalance);
+//        } else if (localState.getTabBalance() < 0.0f ) {
+//            globalBalance.setBaseColor(R.color.negativeBalance);
+//            globalBalance.setDecimalsColor(R.color.negativeBalance);
+//            globalBalance.setSymbolColor(R.color.negativeBalance);
+//        }
     }
-
 
     void updateAPIWithNewStatus(int tab_id, String newStatus) {
         JSONObject tabData = new JSONObject();

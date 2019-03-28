@@ -20,4 +20,7 @@
     <color name="tabNegativeBalance">#535353</color>
     <color name="bgRowDecline">#FA315B</color>
     <color name="bgRowApprove">#1C6406</color>
+
+    <color name="positiveBalance">#00CC00</color>
+    <color name="negativeBalance">#FF3333</color>
 </resources>

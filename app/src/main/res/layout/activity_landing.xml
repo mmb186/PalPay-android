@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".LandingActivity">
-    <!-- TODO: Change status bar color: https://stackoverflow.com/questions/22192291/how-to-change-the-status-bar-color-in-android-->
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
@@ -66,7 +65,7 @@
                 android:textColor="@color/colorBackground"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textSize="24dp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
