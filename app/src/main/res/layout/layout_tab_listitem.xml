@@ -48,6 +48,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="25dp"
         android:layout_marginTop="8dp"
+        app:baseTextColor="@color/colorPrimary"
         app:amount="32.56"
         app:baseTextSize="20sp"
         app:decimalDigitsTextSize="17sp"
