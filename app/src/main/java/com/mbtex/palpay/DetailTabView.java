@@ -365,7 +365,6 @@ public class DetailTabView extends AppCompatActivity {
     class InitiateRecyclerViewCommand implements VolleyCallBack {
         @Override
         public void onSuccessCallBack(String... args) {
-//            updateTabInfo();
             initRecyclerView();
         }
     }
@@ -382,7 +381,7 @@ public class DetailTabView extends AppCompatActivity {
     class ReloadTransactionListCallback implements VolleyCallBack {
         @Override
         public void onSuccessCallBack(String... args) {
-            onStart();
+            onPostResume();
         }
     }
 }
