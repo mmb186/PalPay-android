@@ -86,7 +86,7 @@ public class AuthorizationApiManager extends ApiManager {
                 String auth_token= "";
                 String username = "";
                 String email = "";
-                Toast.makeText(_ctx, "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(_ctx, "Welcome Back! ", Toast.LENGTH_SHORT).show();
 
                 try {
                     auth_token = (String) response.get("auth_token");
@@ -121,6 +121,7 @@ public class AuthorizationApiManager extends ApiManager {
 
         _queue.add(loginUserRequest);
     }
+
     /*
      * Register User
      * Api Call to Register User in and instantiates the user object.
@@ -136,7 +137,7 @@ public class AuthorizationApiManager extends ApiManager {
                 String auth_token= "";
                 String username = "";
                 String email = "";
-                Toast.makeText(_ctx, "Response: " + response.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(_ctx, "Welcome to PalPay!", Toast.LENGTH_SHORT).show();
 
                 try {
                     auth_token = (String) response.get("auth_token");
