@@ -29,10 +29,12 @@ import android.widget.Toast;
 import com.mbtex.palpay.ApiManager.TabApiManager;
 import com.mbtex.palpay.ApiManager.VolleyCallBack;
 import com.mbtex.palpay.Helper.GeneralHelpers;
+import com.mbtex.palpay.Helper.LocalActivityState;
 import com.mbtex.palpay.Tabs.Tab;
 import com.mbtex.palpay.Tabs.TabRecyclerViewAdapter;
 import com.mbtex.palpay.User.User;
 
+import org.fabiomsr.moneytextview.MoneyTextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,9 +45,33 @@ public class Dashboard extends AppCompatActivity {
     private static final String TAG = "Dashboard";
     private ArrayList<Tab> my_tabs = new ArrayList<>();
     private User current_user;
+    private DashboardState localState;
 
-//    TODO: Create Summary Chart!
     private double _balance;
+
+    class DashboardState extends LocalActivityState {
+        private String userName;
+        private float tabBalance;
+
+        public DashboardState(String tabName, float tabBalance) {
+            super();
+            this.userName = tabName;
+            this.tabBalance = tabBalance;
+        }
+
+        @Override
+        public void updateState(Object... arguments) {
+            this.tabBalance = (float) arguments[0];
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public float getTabBalance() {
+            return tabBalance;
+        }
+    }
 
 
     private void registerClickListeners() {
@@ -67,19 +93,26 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.dashboard_toolbar);
-        setSupportActionBar(toolbar);
-
         current_user = getIntent().getExtras().getParcelable("current_user");
 
-        registerClickListeners();
+        localState = new DashboardState(current_user.getUserName(), 0.0f);
+
         Log.d(TAG, "onCreate: Registered Click Listeners");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        setContentView(R.layout.activity_dashboard);
+
         addTabsToTabList();
+        registerClickListeners();
     }
 
     private void addTabsToTabList() {
@@ -89,7 +122,8 @@ public class Dashboard extends AppCompatActivity {
                         current_user,
                         Dashboard.this,
                         my_tabs,
-                        new InitiateRecyclerViewCommand()
+                        new InitiateRecyclerViewCommand(),
+                        localState
                 );
     }
 
@@ -103,7 +137,7 @@ public class Dashboard extends AppCompatActivity {
 
 
         ItemTouchHelper.SimpleCallback tabTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            public static final float ALPHA_FULL = 1.0f;
+            public static final float ALPHA_FULL = 0.7f;
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
                 return false;
@@ -113,15 +147,13 @@ public class Dashboard extends AppCompatActivity {
                 return Math.round(dp * (getResources().getDisplayMetrics().xdpi / DisplayMetrics.DENSITY_DEFAULT));
             }
 
-
-//            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 Log.d(TAG, "onChildDraw: ");
                 float SWIPE_RIGHT_TRANSLATION_CONSTANT = 125;
                 float SWIPE_LEFT_TRANSLATION_CONSTANT = 50;
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                     Log.d(TAG, "onChildDraw: Action is swipe");
-//
+
                     View itemView = viewHolder.itemView;
 
                     Paint p = new Paint();
@@ -208,7 +240,6 @@ public class Dashboard extends AppCompatActivity {
                         tab_swiped.updateStatus(new_tab_status);
 
                         adapter.notifyItemChanged(position);
-
                     }
                     updateAPIWithNewStatus(tab_swiped.getId(), tab_swiped.getUserTabStatus());
 
@@ -217,24 +248,30 @@ public class Dashboard extends AppCompatActivity {
                         Toast.makeText(Dashboard.this, "Cannot Delete Active Tab.", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(Dashboard.this, "Tab is Already Active.", Toast.LENGTH_SHORT).show();
-
                     adapter.notifyItemChanged(position);
                 }
-
-
             }
         };
 
         ItemTouchHelper tabTouchHelper = new ItemTouchHelper(tabTouchCallback);
+        tabTouchHelper.attachToRecyclerView(null);
         tabTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     class InitiateRecyclerViewCommand implements VolleyCallBack {
         @Override
         public void onSuccessCallBack(String... args) {
+            updateGlobalTabBalance();
             initRecyclerView();
         }
     }
+
+    private void updateGlobalTabBalance() {
+        MoneyTextView globalBalance =  findViewById(R.id.tab_view_balance);
+
+        globalBalance.setAmount(localState.getTabBalance());
+    }
+
 
     void updateAPIWithNewStatus(int tab_id, String newStatus) {
         JSONObject tabData = new JSONObject();

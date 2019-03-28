@@ -42,7 +42,7 @@ public class SignUp extends AppCompatActivity {
                 addSignUpFormValues(signUpData);
 
                 AuthorizationApiManager authManager = AuthorizationApiManager.getAuthorizationManager(getCtx());
-                authManager.registerUser(signUpData);
+                authManager.registerUser(signUpData, SignUp.this);
             }
         });
 

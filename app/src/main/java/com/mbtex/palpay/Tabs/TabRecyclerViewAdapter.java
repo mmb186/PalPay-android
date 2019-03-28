@@ -85,8 +85,6 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
                             cannotAccessTabMessage,
                             Toast.LENGTH_SHORT)
                             .show();
-
-                    // TODO: Go to Detailed Tab View.
                 }
             }
         });
