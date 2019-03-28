@@ -1,30 +1,19 @@
 package com.mbtex.palpay;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +37,7 @@ public class Dashboard extends AppCompatActivity {
     private ArrayList<Tab> my_tabs = new ArrayList<>();
     private User current_user;
     private DashboardState localState;
+    private SwipeRefreshLayout refereshLayout;
 
     private double _balance;
 
@@ -76,7 +66,7 @@ public class Dashboard extends AppCompatActivity {
     }
 
 
-    private void registerClickListeners() {
+    private void registerUserEventListeners() {
         final Dashboard localContext = this;
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -85,11 +75,16 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(current_user.createIntentAndAddSelf(localContext, CreateTab.class));
             }
         });
+
+        refereshLayout = findViewById(R.id.tab_list_wipe_container);
+        refereshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onPostResume();
+            }
+        });
     }
 
-    public void handleNewTabClick(View view) {
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +109,7 @@ public class Dashboard extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         addTabsToTabList();
-        registerClickListeners();
+        registerUserEventListeners();
     }
 
     private void addTabsToTabList() {
