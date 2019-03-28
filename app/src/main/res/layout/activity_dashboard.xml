@@ -24,7 +24,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/total_balance"
+                android:id="@+id/dashboard_active_user"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:textColor="@color/colorBackground"

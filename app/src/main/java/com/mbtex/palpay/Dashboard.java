@@ -24,6 +24,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mbtex.palpay.ApiManager.TabApiManager;
@@ -229,14 +231,14 @@ public class Dashboard extends AppCompatActivity {
                         Log.d(TAG, "onSwiped: SWIPED LEFT");
                         adapter.removeTab(position);
                         adapter.notifyItemRemoved(position);
-                        Toast.makeText(Dashboard.this, "SWIPED LEFT", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Dashboard.this, tab_swiped.getName() + "has be Declined", Toast.LENGTH_SHORT).show();
                     }
                     else
                         {
                     // approving Tab
                         new_tab_status = Tab.TAB_APPROVED;
                         Log.d(TAG, "onSwiped: Swiped Right");
-                        Toast.makeText(Dashboard.this, "SWIPED RIGHT", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Dashboard.this, tab_swiped.getName() + "has be Approved", Toast.LENGTH_SHORT).show();
                         tab_swiped.updateStatus(new_tab_status);
 
                         adapter.notifyItemChanged(position);
@@ -267,8 +269,10 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void updateGlobalTabBalance() {
-        MoneyTextView globalBalance = (MoneyTextView)  findViewById(R.id.tab_view_balance);
-        globalBalance.setAmount(localState.getTabBalance());
+        MoneyTextView globalBalance = (MoneyTextView) findViewById(R.id.tab_view_balance);
+        TextView activeUser = (TextView) findViewById(R.id.dashboard_active_user);
+        globalBalance.setAmount(this.localState.getTabBalance());
+        activeUser.setText(this.current_user.getUserName());
 
 
 //        if ((int) localState.getTabBalance() > 0.0f) {

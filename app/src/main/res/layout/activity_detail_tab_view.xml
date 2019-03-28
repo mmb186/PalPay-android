@@ -66,7 +66,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
     <include layout="@layout/content_detail_tab_view" />
 
     <android.support.design.widget.FloatingActionButton
