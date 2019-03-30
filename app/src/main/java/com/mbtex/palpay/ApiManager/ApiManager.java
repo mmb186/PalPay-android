@@ -11,7 +11,7 @@ import org.json.JSONObject;
  */
 public class ApiManager {
 
-    final static String _baseURL = "https://friendpay-stage.herokuapp.com/api";
+    final static String _baseURL = "https://friendpay-pro.herokuapp.com/api";
 
 
     public ApiManager() { }

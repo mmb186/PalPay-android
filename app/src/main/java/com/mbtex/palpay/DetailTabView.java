@@ -11,7 +11,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -34,7 +33,6 @@ import com.mbtex.palpay.User.User;
 import org.fabiomsr.moneytextview.MoneyTextView;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -50,7 +48,7 @@ public class DetailTabView extends AppCompatActivity {
     int _tabId;
     FloatingActionButton fab;
     DetailTabViewState localTabState;
-    SwipeRefreshLayout refereshLayout;
+    SwipeRefreshLayout refreshLayout;
 
     class  DetailTabViewState extends LocalActivityState {
         private String tabName;
@@ -88,8 +86,8 @@ public class DetailTabView extends AppCompatActivity {
             }
         });
 
-        refereshLayout = findViewById(R.id.detail_tab_list_wipe_container);
-        refereshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout = findViewById(R.id.detail_tab_list_wipe_container);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 onPostResume();
