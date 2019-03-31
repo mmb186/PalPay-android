@@ -21,6 +21,11 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+
+/**
+ * Recycler View Class for Tab Transactions.
+ *      - Defines OnClick Functionality and how to bind dataToView
+ */
 public class TabTransactionRecyclerViewAdapter extends RecyclerView.Adapter<TabTransactionRecyclerViewAdapter.ViewHolder> {
     private static final String TAG = "TabTransactionRecycler";
 

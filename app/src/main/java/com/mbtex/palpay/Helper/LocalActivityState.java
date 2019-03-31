@@ -1,5 +1,9 @@
 package com.mbtex.palpay.Helper;
 
+
+/**
+ * Abstract Activity State class
+ */
 abstract public class LocalActivityState {
 
     public LocalActivityState() {

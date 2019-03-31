@@ -8,9 +8,11 @@ import org.json.JSONObject;
 
 /**
  * Base Class For Creating API Requests.
+ *
  */
 public class ApiManager {
 
+    // Base endpoint route.
     final static String _baseURL = "https://friendpay-pro.herokuapp.com/api";
 
 

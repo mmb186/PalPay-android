@@ -15,6 +15,10 @@ import com.mbtex.palpay.User.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+/*
+ *   Create Tab activity housing the Create Tab functionality.
+ */
 public class CreateTab extends AppCompatActivity {
     private static final String TAG = "CreateTab";
     private User current_user;
@@ -58,6 +62,9 @@ public class CreateTab extends AppCompatActivity {
                 String[] users = other_user.getText().toString().split(",");
 
 
+                // NOTE:
+                //      - current implementation checks if we are creating Group Tab or single tab by checking how many users the
+                //        Tab creator is adding ot the Tab.
                 if (users.length < 1 ) {
                     Toast.makeText(CreateTab.this, "Include other user(s) to create a tab", Toast.LENGTH_SHORT).show();
                 }
@@ -86,8 +93,6 @@ public class CreateTab extends AppCompatActivity {
                 TabApiManager.getTabApiManager(getCtx()).
                         create_new_tab(data, current_user, CreateTab.this, isGroupTab);
 
-//                    TabApiManager.getTabApiManager(getCtx()).
-//                            create_new_tab(isGroupTab);
                 }
             }
         });

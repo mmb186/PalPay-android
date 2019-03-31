@@ -29,6 +29,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * TAB API Manager that handles all API requests related to Tabs and Tab Transactions.
+ */
 public class TabApiManager extends ApiManager{
     private static final String TAG = "TabApiManager";
     private static TabApiManager _tabApiManager;
@@ -80,11 +84,10 @@ public class TabApiManager extends ApiManager{
     }
 
 
-    /*
-     * Api create a new Tab.
+    /**
+     * POST: Creates a new tab.
      * */
     public void create_new_tab(JSONObject tabData, final User current_user, final AppCompatActivity callingActivity, final  Boolean isGroupTab) {
-//    public void create_new_tab(Boolean isGroupTab) {
         String endpoint = isGroupTab ? "/create_new_group_tab/" : "/create_new_tab/";
         String create_tab_route = _baseURL + endpoint;
 
@@ -119,6 +122,9 @@ public class TabApiManager extends ApiManager{
         _queue.add(createTabRequest);
     }
 
+    /**
+     * GET: Creates a new tab.
+     * */
     public void get_user_tabs(
             final User current_user,
             final Dashboard actingActivity,
@@ -178,6 +184,9 @@ public class TabApiManager extends ApiManager{
         _queue.add(createTabRequest);
     }
 
+    /**
+     * POST: Updates User Tab Status.
+     * */
     public void update_tab_status (JSONObject newStatus, final User current_user, final AppCompatActivity callingActivity)     {
         String update_user_tab_status = _baseURL + "/set_user_tab_status/";
 
@@ -211,6 +220,9 @@ public class TabApiManager extends ApiManager{
         _queue.add(createTabRequest);
     }
 
+    /**
+     * GET: Get Tab Transactions History.
+     * */
     public void get_tab_transactions(
             final User current_user,
             int tabId,
@@ -273,6 +285,9 @@ public class TabApiManager extends ApiManager{
         _queue.add(createTabRequest);
     }
 
+    /**
+     * POST: Updates User Transaction Status.
+     * */
     public void updateTransactionStatus (JSONObject newStatus, final User current_user, final AppCompatActivity callingActivity) {
         String updateTransactionURL = _baseURL + "/set_tab_transaction_status/";
 
@@ -305,6 +320,9 @@ public class TabApiManager extends ApiManager{
 
     }
 
+    /**
+     * POST: Create new Transaction.
+     * */
     public void createNewTabTransaction (JSONObject newStatus, final User current_user, final AppCompatActivity callingActivity, final VolleyCallBack callback) {
         String update_user_tab_status = _baseURL + "/create_tab_transaction/";
 
@@ -338,6 +356,9 @@ public class TabApiManager extends ApiManager{
         _queue.add(createTabRequest);
      }
 
+    /**
+     * POST: Temporary method for assigning user Display pictures.
+     * */
     private String getImageSRC(Boolean isOtherUser) {
         ArrayList<String> imgURLS = new ArrayList<>();
         imgURLS.add("https://c7.uihere.com/files/348/800/890/computer-icons-avatar-user-login-avatar.jpg");

@@ -24,6 +24,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * Api Manager that handles all requests related to user Authorization
+ */
 public class AuthorizationApiManager extends ApiManager {
     private static AuthorizationApiManager _authorizationManager;
     private RequestQueue _queue;

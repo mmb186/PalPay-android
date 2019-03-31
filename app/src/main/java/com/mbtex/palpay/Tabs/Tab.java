@@ -1,5 +1,9 @@
 package com.mbtex.palpay.Tabs;
 
+
+/*
+ * Tab class to hold Tab information
+ */
 public class Tab {
 
     private String name;

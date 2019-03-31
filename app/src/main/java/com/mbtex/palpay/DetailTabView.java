@@ -36,6 +36,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+
+/**
+ *   Update Tab balance and tab name
+ */
 public class DetailTabView extends AppCompatActivity {
 
 
@@ -44,12 +48,15 @@ public class DetailTabView extends AppCompatActivity {
     User current_user;
     Dialog myDialog;
     private ArrayList<TabTransaction> tab_transactions = new ArrayList<>();
-    private ArrayList<String> imgURLS = new ArrayList<>();
     int _tabId;
     FloatingActionButton fab;
     DetailTabViewState localTabState;
     SwipeRefreshLayout refreshLayout;
 
+
+    /*
+     * Local Activity State Store
+     * */
     class  DetailTabViewState extends LocalActivityState {
         private String tabName;
         private float tabBalance;
@@ -75,8 +82,8 @@ public class DetailTabView extends AppCompatActivity {
         }
     }
 
-    private void registerClickListeners() {
-        Log.d(TAG, "registerClickListeners: Register click listeners");
+    private void registerUserEventListeners() {
+        Log.d(TAG, "registerUserEventListeners: Register click listeners");
         final DetailTabView localContext = this;
         this.fab = (FloatingActionButton) findViewById(R.id.btn_new_transaction);
         this.fab.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +100,6 @@ public class DetailTabView extends AppCompatActivity {
                 onPostResume();
             }
         });
-
-
     }
 
     @Override
@@ -121,7 +126,7 @@ public class DetailTabView extends AppCompatActivity {
     protected void onPostResume() {
 
         setContentView(R.layout.activity_detail_tab_view);
-        registerClickListeners();
+        registerUserEventListeners();
         myDialog = new Dialog(this);
         addTabTransactionsToTransactionList();
 
@@ -141,12 +146,10 @@ public class DetailTabView extends AppCompatActivity {
                 );
     }
 
-    private void initTransactionList() {
-        Log.d(TAG, "initTransactionList: ");
-        initRecyclerView();
-    }
 
-
+    /*
+        Initiate Recycler View and set swipe Right/Left functionality
+     */
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init RecyclerView.");
         RecyclerView recyclerView = findViewById(R.id.detail_tab_recycler_view);
@@ -172,6 +175,8 @@ public class DetailTabView extends AppCompatActivity {
                 Log.d(TAG, "onChildDraw: ");
                 float SWIPE_RIGHT_TRANSLATION_CONSTANT = 125;
                 float SWIPE_LEFT_TRANSLATION_CONSTANT = 50;
+
+
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                     Log.d(TAG, "onChildDraw: Action is swipe");
 
@@ -240,6 +245,7 @@ public class DetailTabView extends AppCompatActivity {
                 String new_transaction_status = "";
 
                 if (transaction_swiped.getUserTransactionStatus().equals(TabTransaction.PENDING))
+                // Handle swipe Far Transactions that are pending only.
                 {
                     Log.d(TAG, "onSwiped: Updated Tab " + transaction_swiped.getTransactionId() + " status");
 
@@ -280,6 +286,9 @@ public class DetailTabView extends AppCompatActivity {
         updateTabInfo();
     }
 
+    /*
+     *   Submit request to update API with the new Transaction status
+     */
     private void updateAPIWithNewTransactionStatus(int id, String status) {
         Log.d(TAG, "updateAPIWithNewTransactionStatus: Updated Status" + status);
         JSONObject tabTransactionStatusData = new JSONObject();
@@ -354,6 +363,9 @@ public class DetailTabView extends AppCompatActivity {
         myDialog.show();
     }
 
+    /*
+     *   Creating Request to send for new from.
+     */
     protected void submit_transaction(double amount, String transaction_type){
         JSONObject new_transaction_data = new JSONObject();
         try {
@@ -373,6 +385,10 @@ public class DetailTabView extends AppCompatActivity {
         myDialog.dismiss();
     }
 
+
+    /*
+     *   VolleyCallback for initiating RecyclerView
+     */
     class InitiateRecyclerViewCommand implements VolleyCallBack {
         @Override
         public void onSuccessCallBack(String... args) {
@@ -380,6 +396,11 @@ public class DetailTabView extends AppCompatActivity {
         }
     }
 
+
+
+    /*
+     *   Update Tab balance and tab name
+     */
     private void updateTabInfo() {
         TextView tabName = (TextView) findViewById(R.id.detail_tab_name);
         MoneyTextView tabBalance = (MoneyTextView) findViewById(R.id.tab_view_balance);
@@ -389,6 +410,9 @@ public class DetailTabView extends AppCompatActivity {
     }
 
 
+    /*
+     *   VolleyCallback to reload Transaction list
+     */
     class ReloadTransactionListCallback implements VolleyCallBack {
         @Override
         public void onSuccessCallBack(String... args) {

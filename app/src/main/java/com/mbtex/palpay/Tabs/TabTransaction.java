@@ -1,7 +1,11 @@
 package com.mbtex.palpay.Tabs;
 
+
+/**
+ * Class Representing Tab Transaction Data.
+ */
 public class TabTransaction {
-    private String imageSource;
+    private String imageSource; // for user
     private String username;
     private String status;
     private String _user_transaction_status;

@@ -21,6 +21,11 @@ import org.fabiomsr.moneytextview.MoneyTextView;
 
 import java.util.ArrayList;
 
+
+/**
+ * Recycler View Class for User Tabs.
+ *      - Defines OnClick Functionality and how to bind dataToView
+ */
 public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerViewAdapter.ViewHolder>{
     private static final String TAG = "TabRecyclerViewAdapter";
 
@@ -35,7 +40,7 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
     }
 
     /*
-    * Decline Tab will result in tab being removed
+    * Removes Tab form list when declined
     * */
     public void removeTab(int position) {
         tabs_list.remove(position);
@@ -64,6 +69,10 @@ public class TabRecyclerViewAdapter extends RecyclerView.Adapter<TabRecyclerView
         viewHolder.tab_status.setText(tabs_list.get(position).getStatus());
         viewHolder.tab_balance.setAmount(tabs_list.get(position).getBalance());
 
+
+        // Implementation to change tab balance colour depending on tab standings.
+        //      - It currently changes to the wrong colour.
+        // TODO: Get this to change to the right colour.
 //        if ( tabs_list.get(position).getBalance() > 0.0f) {
 //            viewHolder.tab_balance.setBaseColor(R.color.positiveBalance);
 //            viewHolder.tab_balance.setDecimalsColor(R.color.positiveBalance);

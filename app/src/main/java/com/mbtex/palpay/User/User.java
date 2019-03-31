@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * User Singleton
+ * User Singleton Representing the logged in user
  */
 public class User implements Parcelable {
 

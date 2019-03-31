@@ -32,15 +32,20 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
+/*
+ *   Main Dashboard Activity holding a list of User tabs and their overall financial standings.
+ */
 public class Dashboard extends AppCompatActivity {
     private static final String TAG = "Dashboard";
     private ArrayList<Tab> my_tabs = new ArrayList<>();
     private User current_user;
     private DashboardState localState;
-    private SwipeRefreshLayout refereshLayout;
+    private SwipeRefreshLayout refreshLayout;
 
-    private double _balance;
 
+    /*
+     *   Local dashboard state class.
+     */
     class DashboardState extends LocalActivityState {
         private String userName;
         private float tabBalance;
@@ -76,8 +81,8 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-        refereshLayout = findViewById(R.id.tab_list_wipe_container);
-        refereshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout = findViewById(R.id.tab_list_wipe_container);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 onPostResume();
@@ -270,6 +275,9 @@ public class Dashboard extends AppCompatActivity {
         activeUser.setText(this.current_user.getUserName());
 
 
+        // Implementation to change tab balance colour depending on tab standings.
+        //      - It currently changes to the wrong colour.
+        // TODO: Get this to change to the right colour.
 //        if ((int) localState.getTabBalance() > 0.0f) {
 //            globalBalance.setBaseColor(R.color.positiveBalance);
 //            globalBalance.setDecimalsColor(R.color.positiveBalance);
@@ -281,6 +289,7 @@ public class Dashboard extends AppCompatActivity {
 //        }
     }
 
+    // Creates a request with the new tab status.
     void updateAPIWithNewStatus(int tab_id, String newStatus) {
         JSONObject tabData = new JSONObject();
 
